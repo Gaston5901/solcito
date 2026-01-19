@@ -824,9 +824,34 @@
           opacity: 1;
       }
     </style>
+
+    <style>
+      .volver-inicio{
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 9999;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.55);
+        border: 1px solid rgba(255,255,255,.20);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
+      .volver-inicio:hover{ transform: translateY(-1px); background: rgba(0,0,0,.70); }
+    </style>
 </head>
 
 <body class="container">
+
+  <a class="volver-inicio" href="../index.html" aria-label="Volver al inicio">← Inicio</a>
     
 
     <!-- Superposición para iniciar el audio (con imagen local) -->
