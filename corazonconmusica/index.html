@@ -88,12 +88,33 @@
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+    .volver-inicio{
+        position: fixed;
+        top: 16px;
+        left: 20px;
+        z-index: 9999;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.55);
+        border: 1px solid rgba(255,255,255,.20);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
+      .volver-inicio:hover{ transform: translateY(-1px); background: rgba(0,0,0,.70); }
   </style>
 </head>
 
 <body>
+  <a class="volver-inicio" href="../index.html" aria-label="Volver al inicio">← </a>
   <canvas class="webgl"></canvas>
-  <h1 class="h1text">Para Ti Marii💖</h1>
+  <h1 class="h1text">Para Tu Solcitoo💖</h1>
   <button id="play-music" type="button" aria-label="Play music">
     <svg fill="currentColor" viewBox="0 0 512 512" width="100" title="music">
       <path
@@ -501,7 +522,8 @@
           this.sound = new THREE.Audio(listener);
           const audioLoader = new THREE.AudioLoader();
           audioLoader.load(
-            "https://assets.codepen.io/74321/ukulele.mp3",
+            // "https://assets.codepen.io/74321/ukulele.mp3",
+            "melaniemartinez3.mp4",
             buffer => {
               this.sound.setBuffer(buffer);
               this.sound.setLoop(false);
