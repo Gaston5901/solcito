@@ -65,12 +65,22 @@
     </style>
 </head>
 <body>
-      <a class="volver-inicio" href="lovecard.html" aria-label="Volver al inicio">← </a>
+
+        <audio id="sound" src="melaniemartinez3.mp4" type="audio/mpeg" preload="auto"></audio>
+        <a class="volver-inicio" href="lovecard.html" aria-label="Volver al inicio">← </a>
 
     <canvas id="backgroundCanvas"></canvas>
     <canvas id="heartCanvas"></canvas>
 
     <script>
+        // Reproducir música automáticamente al cargar (puede requerir interacción en móviles)
+        window.addEventListener('load', function() {
+            const sonido = document.getElementById('sound');
+            // Intentar reproducir automáticamente, pero en móviles puede requerir interacción
+            setTimeout(() => {
+                sonido.play().catch(() => {});
+            }, 500);
+        });
         // Configuración de parámetros
         const config = {
             heart: {
