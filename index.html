@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mis cosos ✨</title>
+  <title>Solcitoo</title>
   <meta name="description" content="Índice con todos los cosos de esta carpeta." />
   <style>
     :root{
@@ -218,6 +218,7 @@
         </div>
       </a> -->
 
+
       <a class="card" href="tulipanes/flor_tulipan.html">
         <h2>Flor (Tulipanes)</h2>
         <div class="meta">
@@ -264,11 +265,63 @@
           <span class="arrow">→</span>
         </div>
       </a> 
+                <!-- Tarjeta bloqueada: Corazones que tira frases -->
+            <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>Corazones que tira frases <span style="font-size:1.2em;">🔒</span></h2>
+              <div class="meta">
+                <span class="tag">corazonquetirafrases</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
+              </div>
+            </a>
+            <!-- Ejemplo de otra tarjeta bloqueada -->
+            <a class="card bloqueada" id="card-2" href="jardindetulipnaes/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>Jardin <span style="font-size:1.2em;">🔒</span></h2>
+              <div class="meta">
+                <span class="tag">Flores</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
+              </div>
+            </a>
+
     </div>
 
     <footer>
       
     </footer>
+    <script>
+      // Objeto con el estado de desbloqueo de cada tarjeta (por id)
+      // Cambia a true la que quieras desbloquear
+      var tarjetasDesbloqueo = {
+        'card-1': false,
+        'card-2': false
+      };
+
+      // Función para desbloquear una tarjeta por id
+      function desbloquearTarjeta(id) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        card.style.opacity = '';
+        card.style.pointerEvents = '';
+        card.style.filter = '';
+        card.querySelector('.bloqueo-msg').style.display = 'none';
+        card.querySelector('.arrow').textContent = '→';
+        card.querySelector('h2 span').textContent = '';
+        // Si quieres cambiar el href dinámicamente, puedes hacerlo aquí
+        // card.href = 'ruta/deseada.html';
+      }
+
+      // Recorre el objeto y desbloquea las que correspondan
+      Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+        if (tarjetasDesbloqueo[id]) {
+          desbloquearTarjeta(id);
+        }
+      });
+    </script>
   </div>
 </body>
 </html>

@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corazón de Colores Mágicos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Poppins:wght@200;300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .great-vibes-font {
+      font-family: 'Great Vibes', cursive;
+    }
+    
+    .poppins-font {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: radial-gradient(ellipse at top, #1e1b4b 0%, #0f0a1f 40%, #1a0a1f 100%);
+    }
+    
+    .nebula {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: nebulaFloat 15s ease-in-out infinite;
+      opacity: 0.4;
+    }
+    
+    @keyframes nebulaFloat {
+      0%, 100% { 
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+      }
+      50% { 
+        transform: translate(50px, -50px) scale(1.2);
+        opacity: 0.5;
+      }
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: starTwinkle 3s ease-in-out infinite;
+    }
+    
+    @keyframes starTwinkle {
+      0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+        box-shadow: 0 0 5px white;
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow: 0 0 15px white, 0 0 25px rgba(255, 255, 255, 0.5);
+      }
+    }
+    
+    .title-emerge {
+      opacity: 0;
+      animation: emergeTitle 3s ease-out forwards;
+    }
+    
+    @keyframes emergeTitle {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.5) rotateX(-90deg);
+        filter: blur(20px);
+      }
+      60% {
+        transform: translateY(-10px) scale(1.05) rotateX(5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+        filter: blur(0);
+      }
+    }
+    
+    .rainbow-glow {
+      text-shadow: 
+        0 0 10px rgba(139, 92, 246, 1),
+        0 0 20px rgba(236, 72, 153, 1),
+        0 0 30px rgba(59, 130, 246, 1),
+        0 0 40px rgba(139, 92, 246, 0.8),
+        0 0 60px rgba(236, 72, 153, 0.6);
+      animation: rainbowPulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes rainbowPulse {
+      0%, 100% {
+        text-shadow: 
+          0 0 10px rgba(139, 92, 246, 1),
+          0 0 20px rgba(236, 72, 153, 1),
+          0 0 30px rgba(59, 130, 246, 1);
+      }
+      50% {
+        text-shadow: 
+          0 0 20px rgba(139, 92, 246, 1),
+          0 0 40px rgba(236, 72, 153, 1),
+          0 0 60px rgba(59, 130, 246, 1),
+          0 0 80px rgba(139, 92, 246, 0.8);
+      }
+    }
+    
+    .color-wave {
+      animation: colorShift 8s ease-in-out infinite;
+    }
+    
+    @keyframes colorShift {
+      0%, 100% { color: #a78bfa; }
+      25% { color: #ec4899; }
+      50% { color: #3b82f6; }
+      75% { color: #f472b6; }
+    }
+    
+    .floating-emoji {
+      position: absolute;
+      animation: emojiFloat 6s ease-in-out infinite;
+      font-size: 2rem;
+      opacity: 0;
+    }
+    
+    @keyframes emojiFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0) rotate(0deg);
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20vh) scale(1.5) rotate(360deg);
+      }
+    }
+    
+    .magic-circle {
+      position: absolute;
+      border: 2px solid;
+      border-radius: 50%;
+      animation: expandCircle 5s ease-out infinite;
+    }
+    
+    @keyframes expandCircle {
+      0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+        border-color: rgba(139, 92, 246, 0.8);
+      }
+      50% {
+        border-color: rgba(236, 72, 153, 0.8);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(3) rotate(180deg);
+        opacity: 0;
+        border-color: rgba(59, 130, 246, 0.8);
+      }
+    }
+    
+    .letter-pop {
+      display: inline-block;
+      animation: letterPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      opacity: 0;
+    }
+    
+    @keyframes letterPop {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+      }
+      60% {
+        transform: scale(1.2) rotate(10deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+    
+    .shimmer {
+      animation: shimmerEffect 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmerEffect {
+      0%, 100% {
+        filter: brightness(1) saturate(1);
+      }
+      50% {
+        filter: brightness(1.3) saturate(1.5);
+      }
+    }
+    
+    .heart-pulse {
+      animation: heartPulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes heartPulse {
+      0%, 100% { 
+        transform: scale(1); 
+      }
+      14% { 
+        transform: scale(1.15); 
+      }
+      28% { 
+        transform: scale(1); 
+      }
+      42% { 
+        transform: scale(1.15); 
+      }
+      56% { 
+        transform: scale(1); 
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full poppins-font">
+  <div id="app" class="h-full w-full gradient-bg relative overflow-hidden"><!-- Nebula clouds -->
+   <div id="nebulas" class="absolute inset-0 pointer-events-none"></div><!-- Stars -->
+   <div id="stars" class="absolute inset-0 pointer-events-none"></div><!-- Floating emojis -->
+   <div id="emojis" class="absolute inset-0 pointer-events-none"></div><!-- Magic circles -->
+   <div id="magic-circles" class="absolute inset-0 pointer-events-none flex items-center justify-center"></div><!-- Particle canvas -->
+   <canvas id="particle-canvas" class="absolute inset-0"></canvas><!-- Titles sequence -->
+   <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 px-4">
+    <div id="title-sequence" class="text-center space-y-6 mb-12">
+     <h2 id="seq-title-1" class="poppins-font text-2xl md:text-4xl font-light text-purple-300 title-emerge opacity-0 rainbow-glow" style="animation-delay: 1.5s;">✨ En este momento mágico ✨</h2>
+     <h2 id="seq-title-2" class="poppins-font text-3xl md:text-5xl font-semibold text-pink-300 title-emerge opacity-0 rainbow-glow" style="animation-delay: 4.5s;">💫 Donde el tiempo se detiene 💫</h2>
+     <h2 id="seq-title-3" class="poppins-font text-2xl md:text-4xl font-light text-blue-300 title-emerge opacity-0 rainbow-glow" style="animation-delay: 7.5s;">💝 Solo existimos tú y yo 💝</h2>
+     <h2 id="seq-title-4" class="poppins-font text-3xl md:text-5xl font-semibold text-purple-300 title-emerge opacity-0 rainbow-glow" style="animation-delay: 10.5s;">🌌 En un universo de amor 🌌</h2>
+    </div><!-- Main message -->
+    <div id="main-message-container" class="text-center opacity-0" style="animation: emergeTitle 2.5s ease-out forwards; animation-delay: 13.5s;">
+     <h1 id="main-title" class="great-vibes-font text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 mb-6 shimmer heart-pulse">Eres mi todo</h1>
+     <div class="flex justify-center items-center space-x-4 mb-6">
+      <div class="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div><span class="text-5xl heart-pulse">💖</span>
+      <div class="h-px w-24 bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
+     </div>
+     <p id="subtitle-text" class="poppins-font text-2xl md:text-3xl font-light tracking-wide color-wave">Mi razón de ser</p>
+     <div class="mt-8 flex justify-center space-x-3"><span class="text-3xl heart-pulse" style="animation-delay: 0s;">💜</span> <span class="text-3xl heart-pulse" style="animation-delay: 0.2s;">💙</span> <span class="text-3xl heart-pulse" style="animation-delay: 0.4s;">💖</span> <span class="text-3xl heart-pulse" style="animation-delay: 0.6s;">❤️</span>
+     </div>
+    </div>
+   </div><!-- Bottom decoration -->
+   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+    <p class="text-purple-300/30 text-xs md:text-sm poppins-font tracking-widest uppercase" style="animation: emergeTitle 2s ease-out forwards; animation-delay: 15s; opacity: 0;">━━━ ✨ Hecho con magia y amor ✨ ━━━</p>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Eres mi todo",
+      subtitle_text: "Mi razón de ser",
+      primary_color: "#a78bfa",
+      secondary_color: "#ec4899",
+      text_color: "#c4b5fd",
+      background_color: "#1e1b4b",
+      accent_color: "#3b82f6"
+    };
+
+    let config = { ...defaultConfig };
+
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let heartPoints = [];
+    let animationFrame = 0;
+    const totalParticles = 500;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      generateHeartPoints();
+      createParticles();
+    }
+
+    function generateHeartPoints() {
+      heartPoints = [];
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const scale = Math.min(canvas.width, canvas.height) * 0.16;
+
+      // Outline
+      for (let t = 0; t < Math.PI * 2; t += 0.008) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        
+        heartPoints.push({
+          x: centerX + x * scale / 16,
+          y: centerY + y * scale / 16
+        });
+      }
+
+      // Fill
+      for (let i = 0; i < 300; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const r = Math.random() * 0.92;
+        const x = 16 * Math.pow(Math.sin(t), 3) * r;
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * r;
+        
+        heartPoints.push({
+          x: centerX + x * scale / 16,
+          y: centerY + y * scale / 16
+        });
+      }
+    }
+
+    function createParticles() {
+      particles = [];
+      
+      for (let i = 0; i < totalParticles; i++) {
+        const target = heartPoints[Math.floor(Math.random() * heartPoints.length)];
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * Math.max(canvas.width, canvas.height) * 1.2;
+        
+        // Color variation: purple, pink, blue, red
+        const colorType = Math.random();
+        let hue;
+        if (colorType < 0.25) hue = 270; // Purple
+        else if (colorType < 0.5) hue = 330; // Pink
+        else if (colorType < 0.75) hue = 210; // Blue
+        else hue = 0; // Red
+        
+        particles.push({
+          x: canvas.width / 2 + Math.cos(angle) * distance,
+          y: canvas.height / 2 + Math.sin(angle) * distance,
+          targetX: target.x,
+          targetY: target.y,
+          startX: canvas.width / 2 + Math.cos(angle) * distance,
+          startY: canvas.height / 2 + Math.sin(angle) * distance,
+          size: Math.random() * 3.5 + 1.5,
+          speed: Math.random() * 0.012 + 0.006,
+          progress: 0,
+          delay: Math.random() * 150,
+          hue: hue + (Math.random() * 30 - 15),
+          pulse: Math.random() * Math.PI * 2,
+          brightness: Math.random() * 0.4 + 0.6,
+          rotation: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function easeOutQuint(x) {
+      return 1 - Math.pow(1 - x, 5);
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      animationFrame++;
+      
+      // Connection lines with rainbow colors
+      for (let i = 0; i < particles.length; i += 3) {
+        for (let j = i + 1; j < Math.min(i + 12, particles.length); j += 2) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 70 && particles[i].progress > 0.6 && particles[j].progress > 0.6) {
+            const gradient = ctx.createLinearGradient(
+              particles[i].x, particles[i].y,
+              particles[j].x, particles[j].y
+            );
+            gradient.addColorStop(0, `hsla(${particles[i].hue}, 100%, 60%, ${(1 - dist / 70) * 0.25})`);
+            gradient.addColorStop(1, `hsla(${particles[j].hue}, 100%, 60%, ${(1 - dist / 70) * 0.25})`);
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // Draw particles
+      particles.forEach((p) => {
+        if (animationFrame < p.delay) return;
+        
+        const activeFrame = animationFrame - p.delay;
+        p.progress = Math.min(1, activeFrame * p.speed);
+        
+        const eased = easeOutQuint(p.progress);
+        
+        p.x = p.startX + (p.targetX - p.startX) * eased;
+        p.y = p.startY + (p.targetY - p.startY) * eased;
+        
+        // Spiral motion during travel
+        if (p.progress < 1) {
+          const spiralRadius = (1 - p.progress) * 70;
+          const spiralAngle = p.progress * Math.PI * 6;
+          p.x += Math.cos(spiralAngle + p.rotation) * spiralRadius;
+          p.y += Math.sin(spiralAngle + p.rotation) * spiralRadius;
+        }
+        
+        // Dynamic pulse
+        const pulse = Math.sin(animationFrame * 0.1 + p.pulse) * 0.6 + 0.4;
+        const size = p.size * (0.8 + pulse * 0.4);
+        
+        // Multi-layer glow
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 5);
+        gradient.addColorStop(0, `hsla(${p.hue}, 100%, ${75 + pulse * 15}%, ${p.progress * p.brightness})`);
+        gradient.addColorStop(0.2, `hsla(${p.hue}, 100%, 65%, ${p.progress * 0.7})`);
+        gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, 55%, ${p.progress * 0.4})`);
+        gradient.addColorStop(1, 'transparent');
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size * 5, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        
+        // Core with extra glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size * 1.2, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 95%, ${p.progress})`;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = `hsla(${p.hue}, 100%, 70%, ${p.progress})`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+    }
+
+    function animate() {
+      drawParticles();
+      requestAnimationFrame(animate);
+    }
+
+    function createNebulas() {
+      const container = document.getElementById('nebulas');
+      const colors = [
+        'rgba(139, 92, 246, 0.3)',  // Purple
+        'rgba(236, 72, 153, 0.3)',   // Pink
+        'rgba(59, 130, 246, 0.3)',   // Blue
+        'rgba(244, 114, 182, 0.3)'   // Light pink
+      ];
+      
+      for (let i = 0; i < 6; i++) {
+        const nebula = document.createElement('div');
+        nebula.className = 'nebula';
+        const size = Math.random() * 400 + 300;
+        nebula.style.width = size + 'px';
+        nebula.style.height = size + 'px';
+        nebula.style.background = colors[Math.floor(Math.random() * colors.length)];
+        nebula.style.left = Math.random() * 100 + '%';
+        nebula.style.top = Math.random() * 100 + '%';
+        nebula.style.animationDelay = (Math.random() * 5) + 's';
+        nebula.style.animationDuration = (Math.random() * 10 + 12) + 's';
+        container.appendChild(nebula);
+      }
+    }
+
+    function createStars() {
+      const container = document.getElementById('stars');
+      
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = (Math.random() * 3) + 's';
+        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(star);
+      }
+    }
+
+    function createFloatingEmojis() {
+      const container = document.getElementById('emojis');
+      const emojis = ['💜', '💙', '💖', '❤️', '💝', '✨', '⭐', '💫', '🌟'];
+      
+      setInterval(() => {
+        const emoji = document.createElement('div');
+        emoji.className = 'floating-emoji';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + '%';
+        emoji.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        container.appendChild(emoji);
+        
+        setTimeout(() => emoji.remove(), 8000);
+      }, 1500);
+    }
+
+    function createMagicCircles() {
+      const container = document.getElementById('magic-circles');
+      
+      for (let i = 0; i < 5; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'magic-circle';
+        circle.style.width = '200px';
+        circle.style.height = '200px';
+        circle.style.animationDelay = (i * 1.2) + 's';
+        container.appendChild(circle);
+      }
+    }
+
+    function init() {
+      resizeCanvas();
+      createNebulas();
+      createStars();
+      createFloatingEmojis();
+      createMagicCircles();
+      animate();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      const mainTitle = document.getElementById('main-title');
+      const subtitleText = document.getElementById('subtitle-text');
+      
+      if (mainTitle) {
+        mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+      
+      if (subtitleText) {
+        subtitleText.textContent = config.subtitle_text || defaultConfig.subtitle_text;
+      }
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || 'Great Vibes',
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["main_title", cfg.main_title || defaultConfig.main_title],
+        ["subtitle_text", cfg.subtitle_text || defaultConfig.subtitle_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    window.addEventListener('load', init);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c15bfcf64b29b23',t:'MTc2ODk4NzM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

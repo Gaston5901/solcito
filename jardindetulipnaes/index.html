@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jardín de Tulipanes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&amp;family=Quicksand:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .dancing-font {
+      font-family: 'Dancing Script', cursive;
+    }
+    
+    .quicksand-font {
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .sky-gradient {
+      background: linear-gradient(to bottom, 
+        #87ceeb 0%, 
+        #b0d4f1 30%, 
+        #ffc0cb 70%, 
+        #ffb6c1 100%);
+    }
+    
+    .grass {
+      background: linear-gradient(to bottom, #7cb342 0%, #558b2f 100%);
+      position: relative;
+    }
+    
+    .grass::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: repeating-linear-gradient(
+        90deg,
+        #7cb342 0px,
+        #689f38 2px,
+        #7cb342 4px
+      );
+    }
+    
+    .tulip {
+      position: absolute;
+      animation: growTulip 2s ease-out forwards, sway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+      opacity: 0;
+    }
+    
+    @keyframes growTulip {
+      0% {
+        opacity: 0;
+        transform: translateY(100%) scale(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    @keyframes sway {
+      0%, 100% {
+        transform: rotate(-2deg);
+      }
+      50% {
+        transform: rotate(2deg);
+      }
+    }
+    
+    .butterfly {
+      position: absolute;
+      animation: flyButterfly 15s ease-in-out infinite;
+      font-size: 2rem;
+    }
+    
+    @keyframes flyButterfly {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(200px, -100px) rotate(10deg);
+      }
+      50% {
+        transform: translate(400px, -50px) rotate(-10deg);
+      }
+      75% {
+        transform: translate(200px, -150px) rotate(5deg);
+      }
+    }
+    
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 100px;
+      animation: floatCloud 30s linear infinite;
+    }
+    
+    @keyframes floatCloud {
+      0% {
+        transform: translateX(-200px);
+      }
+      100% {
+        transform: translateX(120vw);
+      }
+    }
+    
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 100px;
+    }
+    
+    .sun {
+      position: absolute;
+      top: 8%;
+      right: 10%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #ffd700 0%, #ffa500 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+      animation: sunGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes sunGlow {
+      0%, 100% {
+        box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 80px rgba(255, 215, 0, 1);
+        transform: scale(1.05);
+      }
+    }
+    
+    .sun-ray {
+      position: absolute;
+      width: 4px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255, 215, 0, 0.6), transparent);
+      top: 50%;
+      left: 50%;
+      transform-origin: top center;
+      animation: rotateSunRays 20s linear infinite;
+    }
+    
+    @keyframes rotateSunRays {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+    
+    .pollen {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffd700;
+      border-radius: 50%;
+      animation: floatPollen 8s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+    }
+    
+    @keyframes floatPollen {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10%, 90% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-200px) translateX(50px);
+      }
+    }
+    
+    .sparkle {
+      position: absolute;
+      animation: sparkleEffect 2s ease-in-out infinite;
+      font-size: 1.5rem;
+    }
+    
+    @keyframes sparkleEffect {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+      }
+    }
+    
+    .bee {
+      position: absolute;
+      animation: flyBee 12s ease-in-out infinite;
+      font-size: 1.5rem;
+    }
+    
+    @keyframes flyBee {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(150px, 50px);
+      }
+      50% {
+        transform: translate(300px, -30px);
+      }
+      75% {
+        transform: translate(150px, 30px);
+      }
+    }
+    
+    .title-float {
+      animation: titleFloat 3s ease-out forwards;
+      opacity: 0;
+    }
+    
+    @keyframes titleFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+        filter: blur(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+    
+    .text-glow {
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 182, 193, 0.3);
+    }
+    
+    .leaf-fall {
+      position: absolute;
+      animation: leafFall 10s ease-in-out infinite;
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+    
+    @keyframes leafFall {
+      0% {
+        transform: translateY(-50px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .volver {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 10px 22px;
+      background: linear-gradient(90deg, #ffe0ef 60%, #fffde7 100%);
+      border: 1.5px solid var(--accent1);
+      border-radius: 999px;
+      color: var(--accent1);
+      font-size: 1.05rem;
+      font-weight: 600;
+      box-shadow: 0 4px 18px #f8bbd055;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .volver:hover {
+      background: linear-gradient(90deg, #ffe082 60%, #ffe0ef 100%);
+      border-color: var(--gold);
+      color: #b48bbd;
+    }
+       .volver-inicio{
+        position: fixed;
+        top: 16px;
+        left: 20px;
+        z-index: 9999;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.55);
+        border: 1px solid rgba(255,255,255,.20);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
+      .volver-inicio:hover{ transform: translateY(-1px); background: rgba(0,0,0,.70); }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full quicksand-font">
+    <a class="volver-inicio" href="../index.html" aria-label="Volver al inicio">← </a>
+
+  <div id="app" class="h-full w-full sky-gradient relative overflow-hidden"><!-- Sun -->
+   <div class="sun">
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(0deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(45deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(135deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(180deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(225deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(270deg);"></div>
+    <div class="sun-ray" style="transform: translate(-50%, -50%) rotate(315deg);"></div>
+   </div><!-- Clouds -->
+   <div id="clouds-container" class="absolute inset-0 pointer-events-none"></div><!-- Butterflies -->
+   <div id="butterflies-container" class="absolute inset-0 pointer-events-none"></div><!-- Bees -->
+   <div id="bees-container" class="absolute inset-0 pointer-events-none"></div><!-- Pollen particles -->
+   <div id="pollen-container" class="absolute inset-0 pointer-events-none"></div><!-- Sparkles -->
+   <div id="sparkles-container" class="absolute inset-0 pointer-events-none"></div><!-- Falling leaves -->
+   <div id="leaves-container" class="absolute inset-0 pointer-events-none"></div><!-- Title section -->
+   <div class="absolute top-0 left-0 right-0 flex flex-col items-center pt-12 px-4 z-20">
+    <h1 id="main-title" class="dancing-font text-5xl md:text-7xl lg:text-8xl font-bold text-white text-glow text-center mb-4 title-float" style="animation-delay: 0.5s;">Un jardín para ti</h1>
+    <p id="subtitle-text" class="quicksand-font text-xl md:text-3xl font-light text-white text-glow text-center title-float" style="animation-delay: 1s;">Donde florecen nuestros sueños</p>
+    <div class="mt-6 flex space-x-3 title-float" style="animation-delay: 1.5s;"><span class="text-4xl">🌸</span> <span class="text-4xl">💕</span> <span class="text-4xl">🌷</span>
+    </div>
+   </div><!-- Grass ground -->
+   <div class="grass absolute bottom-0 left-0 right-0 h-2/5"><!-- Tulips container -->
+    <div id="tulips-container" class="absolute inset-0"></div>
+   </div><!-- Bottom decoration -->
+   <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+    <p class="text-white/60 text-xs md:text-sm quicksand-font tracking-widest title-float" style="animation-delay: 2s;">🌻 Cultivado con amor 🌻</p>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Un jardín para ti",
+      subtitle_text: "Donde florecen nuestros sueños",
+      primary_color: "#ec4899",
+      secondary_color: "#8b5cf6",
+      text_color: "#ffffff",
+      background_color: "#87ceeb",
+      accent_color: "#fbbf24"
+    };
+
+    let config = { ...defaultConfig };
+
+    function createTulip(x, color, delay) {
+      const tulip = document.createElement('div');
+      tulip.className = 'tulip';
+      tulip.style.left = x + '%';
+      tulip.style.bottom = '0';
+      tulip.style.animationDelay = delay + 's';
+      
+      // Random size variation for realism
+      const scale = Math.random() * 0.3 + 0.85;
+      tulip.style.transform = `scale(${scale})`;
+      
+      // Stem with curve
+      const stem = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      stem.setAttribute('width', '30');
+      stem.setAttribute('height', '160');
+      stem.style.display = 'block';
+      
+      // Curved stem path
+      const stemPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      stemPath.setAttribute('d', 'M 15 160 Q 12 100 15 40');
+      stemPath.setAttribute('stroke', '#4a7c2d');
+      stemPath.setAttribute('stroke-width', '4');
+      stemPath.setAttribute('fill', 'none');
+      stemPath.setAttribute('stroke-linecap', 'round');
+      stem.appendChild(stemPath);
+      
+      // Gradient for stem
+      const stemGradient = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      gradient.setAttribute('id', `stem-grad-${Math.random()}`);
+      gradient.setAttribute('x1', '0%');
+      gradient.setAttribute('y1', '0%');
+      gradient.setAttribute('x2', '0%');
+      gradient.setAttribute('y2', '100%');
+      
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', '#5a9c3d');
+      
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', '#3d6b28');
+      
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      stemGradient.appendChild(gradient);
+      stem.appendChild(stemGradient);
+      
+      // Two leaves
+      const leaf1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      leaf1.setAttribute('d', 'M 15 90 Q 30 95 35 80 Q 30 88 15 92');
+      leaf1.setAttribute('fill', '#5db83d');
+      leaf1.setAttribute('stroke', '#4a7c2d');
+      leaf1.setAttribute('stroke-width', '1');
+      leaf1.setAttribute('opacity', '0.9');
+      stem.appendChild(leaf1);
+      
+      const leaf2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      leaf2.setAttribute('d', 'M 15 110 Q 0 115 -5 100 Q 0 108 15 112');
+      leaf2.setAttribute('fill', '#5db83d');
+      leaf2.setAttribute('stroke', '#4a7c2d');
+      leaf2.setAttribute('stroke-width', '1');
+      leaf2.setAttribute('opacity', '0.9');
+      stem.appendChild(leaf2);
+      
+      tulip.appendChild(stem);
+      
+      // Realistic tulip flower
+      const flower = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      flower.setAttribute('width', '70');
+      flower.setAttribute('height', '80');
+      flower.style.display = 'block';
+      flower.style.marginLeft = '-20px';
+      flower.style.marginTop = '-35px';
+      
+      // Create gradient for petals
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const petalGradient = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient');
+      const gradId = `petal-grad-${Math.random()}`;
+      petalGradient.setAttribute('id', gradId);
+      
+      const pStop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      pStop1.setAttribute('offset', '0%');
+      pStop1.setAttribute('stop-color', lightenColor(color, 30));
+      
+      const pStop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      pStop2.setAttribute('offset', '70%');
+      pStop2.setAttribute('stop-color', color);
+      
+      const pStop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      pStop3.setAttribute('offset', '100%');
+      pStop3.setAttribute('stop-color', darkenColor(color, 20));
+      
+      petalGradient.appendChild(pStop1);
+      petalGradient.appendChild(pStop2);
+      petalGradient.appendChild(pStop3);
+      defs.appendChild(petalGradient);
+      flower.appendChild(defs);
+      
+      // Back petals (3 petals)
+      const backPetal1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      backPetal1.setAttribute('d', 'M 35 50 Q 25 20 20 15 Q 15 20 20 50 Z');
+      backPetal1.setAttribute('fill', `url(#${gradId})`);
+      backPetal1.setAttribute('stroke', darkenColor(color, 30));
+      backPetal1.setAttribute('stroke-width', '1');
+      backPetal1.setAttribute('opacity', '0.85');
+      flower.appendChild(backPetal1);
+      
+      const backPetal2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      backPetal2.setAttribute('d', 'M 25 50 Q 15 20 10 15 Q 5 20 10 50 Z');
+      backPetal2.setAttribute('fill', `url(#${gradId})`);
+      backPetal2.setAttribute('stroke', darkenColor(color, 30));
+      backPetal2.setAttribute('stroke-width', '1');
+      backPetal2.setAttribute('opacity', '0.8');
+      flower.appendChild(backPetal2);
+      
+      const backPetal3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      backPetal3.setAttribute('d', 'M 45 50 Q 35 20 30 15 Q 25 20 30 50 Z');
+      backPetal3.setAttribute('fill', `url(#${gradId})`);
+      backPetal3.setAttribute('stroke', darkenColor(color, 30));
+      backPetal3.setAttribute('stroke-width', '1');
+      backPetal3.setAttribute('opacity', '0.8');
+      flower.appendChild(backPetal3);
+      
+      // Front petals (3 petals)
+      const frontPetal1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      frontPetal1.setAttribute('d', 'M 35 55 Q 32 25 30 18 Q 28 25 28 55 Z');
+      frontPetal1.setAttribute('fill', `url(#${gradId})`);
+      frontPetal1.setAttribute('stroke', darkenColor(color, 30));
+      frontPetal1.setAttribute('stroke-width', '1.5');
+      flower.appendChild(frontPetal1);
+      
+      const frontPetal2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      frontPetal2.setAttribute('d', 'M 20 55 Q 17 25 15 18 Q 13 25 13 55 Z');
+      frontPetal2.setAttribute('fill', `url(#${gradId})`);
+      frontPetal2.setAttribute('stroke', darkenColor(color, 30));
+      frontPetal2.setAttribute('stroke-width', '1.5');
+      flower.appendChild(frontPetal2);
+      
+      const frontPetal3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      frontPetal3.setAttribute('d', 'M 27 55 Q 24 25 22 18 Q 20 25 20 55 Z');
+      frontPetal3.setAttribute('fill', `url(#${gradId})`);
+      frontPetal3.setAttribute('stroke', darkenColor(color, 30));
+      frontPetal3.setAttribute('stroke-width', '1.5');
+      flower.appendChild(frontPetal3);
+      
+      // Inner center detail
+      const center = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      center.setAttribute('cx', '22');
+      center.setAttribute('cy', '50');
+      center.setAttribute('rx', '4');
+      center.setAttribute('ry', '3');
+      center.setAttribute('fill', '#2d1f0f');
+      center.setAttribute('opacity', '0.5');
+      flower.appendChild(center);
+      
+      tulip.appendChild(flower);
+      
+      return tulip;
+    }
+    
+    function lightenColor(color, percent) {
+      const num = parseInt(color.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+        (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+        (B < 255 ? B < 1 ? 0 : B : 255))
+        .toString(16).slice(1);
+    }
+    
+    function darkenColor(color, percent) {
+      const num = parseInt(color.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) - amt;
+      const G = (num >> 8 & 0x00FF) - amt;
+      const B = (num & 0x0000FF) - amt;
+      return '#' + (0x1000000 + (R > 0 ? R : 0) * 0x10000 +
+        (G > 0 ? G : 0) * 0x100 +
+        (B > 0 ? B : 0))
+        .toString(16).slice(1);
+    }
+
+    function createTulipGarden() {
+      const container = document.getElementById('tulips-container');
+      const colors = ['#ec4899', '#ef4444', '#8b5cf6', '#fbbf24', '#f8fafc'];
+      const tulipCount = 30;
+      
+      for (let i = 0; i < tulipCount; i++) {
+        const x = Math.random() * 95 + 2;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const delay = Math.random() * 3;
+        const tulip = createTulip(x, color, delay);
+        container.appendChild(tulip);
+      }
+    }
+
+    function createClouds() {
+      const container = document.getElementById('clouds-container');
+      
+      for (let i = 0; i < 5; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        const width = Math.random() * 100 + 80;
+        const height = width * 0.5;
+        cloud.style.width = width + 'px';
+        cloud.style.height = height + 'px';
+        cloud.style.top = Math.random() * 30 + 5 + '%';
+        cloud.style.left = -200 + (i * 30) + '%';
+        cloud.style.animationDuration = (Math.random() * 20 + 25) + 's';
+        cloud.style.animationDelay = (i * 5) + 's';
+        
+        cloud.style.setProperty('--before-width', (width * 0.5) + 'px');
+        cloud.style.setProperty('--before-height', (height * 0.8) + 'px');
+        
+        const beforeStyle = document.createElement('style');
+        beforeStyle.textContent = `
+          .cloud:nth-child(${i + 1})::before {
+            width: ${width * 0.5}px;
+            height: ${height * 0.8}px;
+            top: -${height * 0.3}px;
+            left: ${width * 0.2}px;
+          }
+          .cloud:nth-child(${i + 1})::after {
+            width: ${width * 0.6}px;
+            height: ${height * 0.7}px;
+            top: -${height * 0.2}px;
+            right: ${width * 0.15}px;
+          }
+        `;
+        document.head.appendChild(beforeStyle);
+        
+        container.appendChild(cloud);
+      }
+    }
+
+    function createButterflies() {
+      const container = document.getElementById('butterflies-container');
+      const butterflies = ['🦋', '🦋', '🦋'];
+      
+      butterflies.forEach((butterfly, i) => {
+        const el = document.createElement('div');
+        el.className = 'butterfly';
+        el.textContent = butterfly;
+        el.style.left = Math.random() * 30 + '%';
+        el.style.top = Math.random() * 40 + 10 + '%';
+        el.style.animationDelay = (i * 5) + 's';
+        el.style.animationDuration = (Math.random() * 5 + 12) + 's';
+        container.appendChild(el);
+      });
+    }
+
+    function createBees() {
+      const container = document.getElementById('bees-container');
+      
+      for (let i = 0; i < 3; i++) {
+        const bee = document.createElement('div');
+        bee.className = 'bee';
+        bee.textContent = '🐝';
+        bee.style.left = Math.random() * 50 + '%';
+        bee.style.top = Math.random() * 30 + 40 + '%';
+        bee.style.animationDelay = (i * 4) + 's';
+        bee.style.animationDuration = (Math.random() * 4 + 10) + 's';
+        container.appendChild(bee);
+      }
+    }
+
+    function createPollen() {
+      const container = document.getElementById('pollen-container');
+      
+      for (let i = 0; i < 20; i++) {
+        const pollen = document.createElement('div');
+        pollen.className = 'pollen';
+        pollen.style.left = Math.random() * 100 + '%';
+        pollen.style.bottom = Math.random() * 40 + '%';
+        pollen.style.animationDelay = (Math.random() * 5) + 's';
+        pollen.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        container.appendChild(pollen);
+      }
+    }
+
+    function createSparkles() {
+      const container = document.getElementById('sparkles-container');
+      
+      for (let i = 0; i < 15; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = '✨';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 60 + 10 + '%';
+        sparkle.style.animationDelay = (Math.random() * 3) + 's';
+        sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(sparkle);
+      }
+    }
+
+    function createFallingLeaves() {
+      const container = document.getElementById('leaves-container');
+      const leaves = ['🍃', '🌿'];
+      
+      setInterval(() => {
+        const leaf = document.createElement('div');
+        leaf.className = 'leaf-fall';
+        leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+        leaf.style.left = Math.random() * 100 + '%';
+        leaf.style.animationDuration = (Math.random() * 5 + 8) + 's';
+        container.appendChild(leaf);
+        
+        setTimeout(() => leaf.remove(), 13000);
+      }, 2000);
+    }
+
+    function init() {
+      createTulipGarden();
+      createClouds();
+      createButterflies();
+      createBees();
+      createPollen();
+      createSparkles();
+      createFallingLeaves();
+    }
+
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      const mainTitle = document.getElementById('main-title');
+      const subtitleText = document.getElementById('subtitle-text');
+      
+      if (mainTitle) {
+        mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+      
+      if (subtitleText) {
+        subtitleText.textContent = config.subtitle_text || defaultConfig.subtitle_text;
+      }
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || 'Dancing Script',
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["main_title", cfg.main_title || defaultConfig.main_title],
+        ["subtitle_text", cfg.subtitle_text || defaultConfig.subtitle_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    window.addEventListener('load', init);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c15d51bb7719b23',t:'MTc2ODk4ODI0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
