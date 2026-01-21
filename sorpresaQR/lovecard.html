@@ -280,9 +280,21 @@
         }
 
         @media (max-width: 500px) {
+            .contenido {
+                margin-top: -10px !important;
+                            
+            }
+    
+
             h1 {
                 font-size: 1.3rem;
                 margin-bottom: 10px;
+            }
+            .main-content {
+                transform: translateY(-13vh);
+            }
+            body {
+                padding-top: -4px;
             }
             .envoltura-sobre {
                 width: 99vw;
@@ -295,8 +307,8 @@
                 height: 99vh !important;
                 max-height: 99vh;
                 left: 50%;
-                top: 5px !important;
-                transform: translateX(-50%) scale(1) !important;
+                top: 0 !important;
+                transform: translate(-50%, -26vh) scale(1) !important;
                 padding: 6px;
             }
             .contenido {
@@ -331,9 +343,59 @@
             25% { opacity: 1; transform: translate(var(--x-mid), var(--y-mid)) scale(1.8) rotate(var(--r-mid)); }
             100% { opacity: 0; transform: translate(var(--x-end), var(--y-end)) scale(var(--s-end)) rotate(var(--r-end)); }
         }
+        .indicador-boton {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            margin-bottom: -8px;
+                            animation: indicador-parpadeo 1.2s infinite;
+                        }
+                        .texto-indicador {
+                            font-family: 'Lora', serif;
+                            font-size: 1.1rem;
+                            color: #c91515;
+                            font-weight: bold;
+                            margin-bottom: -2px;
+                            text-shadow: 0 1px 8px #fff8;
+                        }
+                        .flecha-indicador {
+                            font-size: 1.5rem;
+                            margin-bottom: 2px;
+                            animation: flecha-mueve 1.2s infinite;
+                        }
+                        @keyframes flecha-mueve {
+                            0%, 100% { transform: translateY(0); }
+                            50% { transform: translateY(8px); }
+                        }
+                        @keyframes indicador-parpadeo {
+                            0%, 100% { opacity: 1; }
+                            50% { opacity: 0.5; }
+                        }
+           .volver-inicio{
+        position: fixed;
+        top: 16px;
+        left: 20px;
+        z-index: 9999;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,.55);
+        border: 1px solid rgba(255,255,255,.20);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
+      .volver-inicio:hover{ transform: translateY(-1px); background: rgba(0,0,0,.70); }
     </style>
 </head>
 <body>
+      <a class="volver-inicio" href="../index.html" aria-label="Volver al inicio">← </a>
+
 
     <div id="loader">
         <div class="loader-icon">💌</div>
@@ -356,22 +418,34 @@
                 <div class="carta">
                     <div class="contenido">
                         <span class="fecha">Donde el tiempo no existe</span>
-                        <p class="saludo">Mi estrella guía,</p>
-                        <p class="cuerpo">Hay universos enteros en tus ojos, y he tenido la suerte de perderme en ellos. No eres un capítulo en mi historia, eres el libro entero.</p>
-                        <p class="cuerpo">Gracias por ser mi calma en medio del caos, y mi más bonita casualidad.</p>
+                        <p class="saludo">Para la chica más increíble solcitoo,</p>
+                        <p class="cuerpo">Quiero que nunca dudes de lo especial que sos. De verdad, sos una persona única, con una luz y una energía que contagian alegría a todos los que te rodean. No solo sos hermosa por fuera, sino que tu corazón y tu forma de ser te hacen aún más linda.</p>
+                        <p class="cuerpo">Si alguna vez te sentís insegura o alguien te hace sentir mal, que se prepare porque lo hacemos cagarr (que se joda y soporten). Sos valiosa, fuerte, divertida y hermosa en todos los sentidos. Gracias por existir y por dejarme compartir momentos con vos. Nunca cambies, porque así como sos, ya sos perfecta.</p>
                         
                         <div class="bloque-firma">
                             <img src="https://drive.google.com/thumbnail?id=1SsZk-dSh2jGsS2kGgCqhZIgeD9ZUi_jM" alt="Foto de recuerdo" class="imagen-recuerdo">
-                            <p class="firma">Con amor infinito,<br>JCode</p>
+                            <p class="firma">Te quiero con amor infinito,<br>Gaston</p>
                         </div>
+                         <div style="text-align:center; margin-top: 30px;">
+                                        <div class="indicador-boton">
+                                            <span class="texto-indicador">Tocá aquí</span>
+                                            <span class="flecha-indicador">⬇️</span>
+                                        </div>
+                        
+            <a href="heartsimple.html" target="_blank"  style="font-family: 'Lora', serif; font-size: 1.2rem; color: #c91515; text-decoration: none; border: 2px solid #c91515; border-radius: 8px; padding: 8px 18px; background: #fff0f5; transition: background 0.2s, color 0.2s; display: inline-block; margin-top: 18px;">
+                Continuar Sorpresa ❤️
+            </a>
+        </div>
 
                     </div>
                 </div>
             </div>
         </div>
+       
     </main>
     
-    <audio id="sound" src="https://dl.dropboxusercontent.com/scl/fi/esct592hxwzjyf9a2egpc/Si-supieras-lo-que-siento-con-mirarte....mp3?rlkey=xqbaohnpyd7b3mejkvvdg6dlq&st=2vagx61x&dl=1" type="audio/mpeg" preload="auto"></audio>
+    <!-- <audio id="sound" src="https://dl.dropboxusercontent.com/scl/fi/esct592hxwzjyf9a2egpc/Si-supieras-lo-que-siento-con-mirarte....mp3?rlkey=xqbaohnpyd7b3mejkvvdg6dlq&st=2vagx61x&dl=1" type="audio/mpeg" preload="auto"></audio> -->
+    <audio id="sound" src="morat.mp4" type="audio/mpeg" preload="auto"></audio>
 
     <script>
         window.addEventListener('load', () => {
