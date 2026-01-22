@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Luana!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primario: #ff69b4;
+            --secundario: #9b59b6;
+            --fondo: #fce4ec;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--fondo);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 94%;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: var(--primario);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .numero {
+            font-size: 5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primario), var(--secundario));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .btn-regalo {
+            background: var(--primario);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-regalo:hover {
+            transform: scale(1.1);
+            background: #ff4da6;
+        }
+
+        .decoracion {
+            position: absolute;
+            font-size: 2.5rem;
+            z-index: 0;
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.1rem 0.5rem 1.5rem 0.5rem;
+                max-width: 98vw;
+                border-radius: 14px;
+            }
+            h1 {
+                font-size: 1.45rem !important;
+            }
+            .numero {
+                font-size: 2.7rem;
+            }
+            .btn-regalo {
+                font-size: 0.95rem;
+                padding: 10px 14px;
+            }
+            .decoracion {
+                font-size: 1.5rem;
+            }
+            svg {
+                width: 70px !important;
+                height: 55px !important;
+            }
+            p {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decoracion" style="top: 10%; left: 10%; font-size:2.5rem;">🎈</div>
+    <div class="decoracion" style="top: 20%; right: 15%; animation-delay: 1s; font-size:2.5rem;">✨</div>
+    <div class="decoracion" style="bottom: 15%; left: 15%; animation-delay: 0.5s; font-size:2.5rem;">🎉</div>
+    <div class="decoracion" style="bottom: 10%; right: 10%; animation-delay: 1.5s; font-size:2.5rem;">💖</div>
+
+    <div class="card">
+        <div style="margin-bottom: 1.2rem;">
+            <!-- Título decorativo con sombra y emojis -->
+            <h1 style="
+                color: var(--primario); 
+                font-size: 2.7rem; 
+                margin-bottom: 0.2rem; 
+                text-shadow: 0 2px 12px #ffb6d580, 0 1px 0 #fff;
+                letter-spacing: 0.03em;
+                font-family: 'Segoe Script', 'Dancing Script', cursive, sans-serif;">
+                🎉 ¡Feliz Cumpleaños! 🎂
+            </h1>
+            <div style="font-size:1.5rem; color:var(--secundario); font-weight:600; margin-bottom:0.5rem;">Luana</div>
+        </div>
+        <!-- Torta SVG grande y colorida -->
+        <div style="margin-bottom:1.2rem;">
+            <svg width="110" height="90" viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="55" cy="80" rx="40" ry="10" fill="#f8bbd0"/>
+                <rect x="20" y="40" width="70" height="40" rx="18" fill="#fff" stroke="#f8bbd0" stroke-width="3"/>
+                <rect x="30" y="25" width="50" height="20" rx="10" fill="#ffe082" stroke="#fbc02d" stroke-width="2"/>
+                <ellipse cx="55" cy="25" rx="25" ry="7" fill="#ff69b4"/>
+                <rect x="52" y="10" width="6" height="18" rx="3" fill="#ffd700"/>
+                <ellipse cx="55" cy="10" rx="3" ry="3" fill="#fff59d"/>
+                <ellipse cx="55" cy="10" rx="1.2" ry="1.2" fill="#ffb300"/>
+                <!-- Sprinkles -->
+                <rect x="38" y="28" width="2" height="6" rx="1" fill="#f48fb1"/>
+                <rect x="45" y="30" width="2" height="5" rx="1" fill="#ba68c8"/>
+                <rect x="62" y="28" width="2" height="6" rx="1" fill="#ffd54f"/>
+                <rect x="70" y="30" width="2" height="5" rx="1" fill="#81d4fa"/>
+            </svg>
+        </div>
+        <div class="numero" style="margin-bottom:0.2rem;">12</div>
+        <p style="margin-bottom:1.2rem; font-size:1.15rem; color:#a64ca6; font-weight:500;">
+            ¡Hoy celebramos tu día especial!<br>
+            Que la vida te regale siempre motivos para sonreír, soñar y disfrutar.<br>
+            <span style="color:#ff69b4; font-size:1.2em;">¡Te queremos mucho!</span>
+        </p>
+        <button class="btn-regalo" onclick="lanzarConfetti()">
+            ¡Clic para tu sorpresa! 🎁
+        </button>
+    </div>
+
+    <script>
+        // Lanzar confetti al cargar la página
+        window.onload = () => {
+            lanzarConfetti();
+        };
+
+        function lanzarConfetti() {
+            // Configuración de la explosión de colores
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff69b4', '#9b59b6', '#ffffff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff69b4', '#9b59b6', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>

@@ -204,7 +204,7 @@
     <div class="grid">
          <!-- Tarjeta bloqueada: Corazones que tira frases -->
             <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>Corazones que tira frases <span style="font-size:1.2em;">🔒</span></h2>
+              <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
                 <span class="tag">corazonquetirafrases</span>
                 <span class="arrow">🔒</span>
@@ -215,9 +215,9 @@
             </a>
             <!-- Ejemplo de otra tarjeta bloqueada -->
             <a class="card bloqueada" id="card-2" href="jardindetulipnaes/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>Jardin <span style="font-size:1.2em;">🔒</span></h2>
+              <h2>Corazon fuerte <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
-                <span class="tag">Flores</span>
+                <span class="tag">corazon flechas</span>
                 <span class="arrow">🔒</span>
               </div>
               <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
@@ -298,10 +298,11 @@
     <script>
       // Objeto con el estado de desbloqueo de cada tarjeta (por id)
       // Cambia a true la que quieras desbloquear
-      var tarjetasDesbloqueo = {
-        'card-1': false,
-        'card-2': false
-      };
+      // Bloquear ambas cards al cargar
+var tarjetasDesbloqueo = {
+  'card-1': false,
+  'card-2': false
+};
 
       // Función para desbloquear una tarjeta por id
       function desbloquearTarjeta(id) {
@@ -317,10 +318,100 @@
         // card.href = 'ruta/deseada.html';
       }
 
+      // Función para poner un contador en una tarjeta bloqueada
+      function ponerContadorEnCard(id, fechaDesbloqueo) {
+  var card = document.getElementById(id);
+  if (!card) return;
+  var msg = card.querySelector('.bloqueo-msg');
+  if (!msg) return;
+  // Si la tarjeta ya está desbloqueada, volver a bloquearla
+  card.style.opacity = '0.5';
+  card.style.pointerEvents = 'none';
+  card.style.filter = 'grayscale(0.7)';
+  msg.style.display = 'flex';
+  card.querySelector('.arrow').textContent = '🔒';
+  card.querySelector('h2 span').textContent = '';
+  if (typeof tarjetasDesbloqueo === 'object') {
+    tarjetasDesbloqueo[id] = false;
+  }
+  // Crear o reutilizar el div del contador
+  let contadorDiv = msg.querySelector('.contador-desbloqueo');
+  if (!contadorDiv) {
+    contadorDiv = document.createElement('div');
+    contadorDiv.className = 'contador-desbloqueo';
+    // Mejor ubicación y color llamativo
+    contadorDiv.style.cssText = `
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #f48fb1 60%, #ffe082 100%);
+      padding: 10px 22px;
+      border-radius: 999px;
+      box-shadow: 0 4px 18px #f8bbd055, 0 2px 8px #fffde7cc;
+      border: 2px solid #f8bbd0;
+      z-index: 2;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px #b48bbd88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+    `;
+    msg.appendChild(contadorDiv);
+  }
+  function actualizarContador() {
+    var ahora = new Date();
+    var falta = fechaDesbloqueo - ahora;
+    if (falta <= 0) {
+      contadorDiv.remove(); // Eliminar el contador visual
+      card.style.opacity = '';
+      card.style.pointerEvents = '';
+      card.style.filter = '';
+      msg.style.display = 'none';
+      card.querySelector('.arrow').textContent = '→';
+      card.querySelector('h2 span').textContent = '';
+      if (typeof tarjetasDesbloqueo === 'object') {
+        tarjetasDesbloqueo[id] = true;
+      }
+      return;
+    }
+    var dias = Math.floor(falta / (1000*60*60*24));
+    var horas = Math.floor((falta / (1000*60*60)) % 24);
+    var mins = Math.floor((falta / (1000*60)) % 60);
+    var segs = Math.floor((falta / 1000) % 60);
+    let partes = [];
+    if (dias > 0) partes.push(dias + 'd');
+    if (horas > 0 || dias > 0) partes.push(horas + 'h');
+    if (mins > 0 || horas > 0 || dias > 0) partes.push(mins + 'm');
+    partes.push(segs + 's');
+    contadorDiv.textContent = 'Disponible en: ' + partes.join(' ');
+    setTimeout(actualizarContador, 1000);
+  }
+  actualizarContador();
+}
+
+      // Llama a esta función para poner un contador en la card que quieras:
+      // ponerContadorEnCard('id-de-la-card', fechaObjetivoDate)
+      // Ejemplo para poner 2 horas desde ahora en la card con id "card-3":
+      // --- CONTADORES DE DESBLOQUEO ---
+      // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
+      // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
+      // ponerContadorEnCard('card-2', new Date('2025-01-14T04:00:00'));
+      // ↑ card-2: id de otra tarjeta
+      // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
+      // --- FIN CONTADORES ---
+
       // Recorre el objeto y desbloquea las que correspondan
       Object.keys(tarjetasDesbloqueo).forEach(function(id) {
         if (tarjetasDesbloqueo[id]) {
           desbloquearTarjeta(id);
+        } else {
+          // Ejemplo: desbloquear el card-1 el 22 de enero de 2027 a las 15:00
+          // ponerContadorEnCard('card-1', new Date('2026-01-22T014:00:00'));
         }
       });
     </script>

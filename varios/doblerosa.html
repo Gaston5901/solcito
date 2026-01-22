@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Flores Animadas</title>
+    <style>
+        body {
+            background-color: #0b1116;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+        }
+
+        /* Estilo de los tallos (SVG) */
+        .stem {
+            fill: none;
+            stroke: #4d9a8c;
+            stroke-width: 3;
+            stroke-linecap: round;
+            /* El truco del dibujo */
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 4s ease-out forwards;
+        }
+
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Contenedor de las flores */
+        .flower {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            transform: scale(0);
+            /* Aparecen después de que el tallo se dibuja */
+            animation: bloom 1s ease-out 3.5s forwards;
+        }
+
+        .flower-left { top: 120px; left: 110px; }
+        .flower-right { top: 120px; right: 110px; }
+
+        @keyframes bloom {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Dibujando pétalos simples con CSS */
+        .petal {
+            position: absolute;
+            background: #ffb7c5;
+            width: 20px;
+            height: 20px;
+            border-radius: 50% 50% 0 50%;
+        }
+        .p1 { transform: rotate(0deg); top: 0; left: 10px; }
+        .p2 { transform: rotate(72deg); top: 10px; left: 20px; }
+        .p3 { transform: rotate(144deg); top: 25px; left: 15px; }
+        .p4 { transform: rotate(216deg); top: 25px; left: 0px; }
+        .p5 { transform: rotate(288deg); top: 10px; left: -5px; }
+        .center {
+            position: absolute;
+            background: #f9d71c;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            top: 14px;
+            left: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <svg viewBox="0 0 600 400">
+        <path class="stem" d="M300,350 Q250,350 150,150" />
+        <path class="stem" d="M300,350 Q350,350 450,150" />
+        
+        <path class="stem" style="animation-delay: 1s;" d="M230,260 Q210,240 180,250" />
+        <path class="stem" style="animation-delay: 1s;" d="M370,260 Q390,240 420,250" />
+    </svg>
+
+    <div class="flower flower-left">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="center"></div>
+    </div>
+
+    <div class="flower flower-right">
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="center"></div>
+    </div>
+</div>
+
+</body>
+</html>

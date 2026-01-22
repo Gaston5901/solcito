@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Corazón de Partículas y Flechas</title>
+    <style>
+        /* body { margin: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; }
+        @keyframes sol-brillo {
+          0% { filter: drop-shadow(0 0 0px #ffe082) brightness(1); }
+          100% { filter: drop-shadow(0 0 12px #ffe082) brightness(1.15); }
+        }
+        @media (max-width: 600px) {
+          #solcitoo-anim {
+            font-size: 1.05rem !important;
+            padding: 0 6vw;
+          }
+        } */
+    </style>
+</head>
+<body>
+<div id="frase-top-sol" style="width:100vw;text-align:center;position:fixed;top:18px;left:0;z-index:10;pointer-events:none;">
+  <span id="solcitoo-anim" style="font-family:'Segoe Script','Dancing Script',cursive,sans-serif;font-size:1.35rem;color:#ffe082;text-shadow:0 2px 10px #000a,0 1px 0 #fff;letter-spacing:0.03em;animation:sol-brillo 2.5s ease-in-out infinite alternate;">Para tu Solcitoo ☀️</span>
+</div>
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height, particles = [], arrows = [];
+const particleCount = 600;
+
+// Configuración de pantalla
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Clase para las partículas del corazón
+class Particle {
+    constructor(x, y) {
+        this.homeX = x;
+        this.homeY = y;
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 2 + 1;
+        this.color = `hsla(${Math.random() * 20 + 340}, 100%, 70%, 0.8)`;
+        this.vx = 0;
+        this.vy = 0;
+    }
+
+    update(arrows) {
+        let dx = this.homeX - this.x;
+        let dy = this.homeY - this.y;
+        
+        // Atracción al centro (efecto muelle para volver a su sitio)
+        this.vx += dx * 0.05;
+        this.vy += dy * 0.05;
+        this.vx *= 0.9;
+        this.vy *= 0.9;
+
+        // Repulsión de las flechas
+        arrows.forEach(arrow => {
+            let adx = this.x - arrow.x;
+            let ady = this.y - arrow.y;
+            let dist = Math.sqrt(adx * adx + ady * ady);
+            if (dist < 60) {
+                let force = (60 - dist) / 60;
+                this.vx += adx * force * 0.5;
+                this.vy += ady * force * 0.5;
+            }
+        });
+
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// Función para obtener puntos en forma de corazón
+function getHeartPoint(t) {
+    // Ecuación paramétrica del corazón
+    const x = 16 * Math.pow(Math.sin(t), 3);
+    const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+    return { x: x * 15, y: y * 15 };
+}
+
+function init() {
+    // Crear corazón
+    for (let i = 0; i < particleCount; i++) {
+        const t = (i / particleCount) * Math.PI * 2;
+        const pos = getHeartPoint(t);
+        particles.push(new Particle(width / 2 + pos.x, height / 2 + pos.y));
+    }
+    
+    // Crear flechas iniciales
+    setInterval(() => {
+        arrows.push({ x: -50, y: height/2 - 230, vx: 7, vy: 3, type: 'LR' }); // Izquierda a Derecha
+        arrows.push({ x: width + 50, y: height/2 - 230, vx: -7, vy: 3, type: 'RL' }); // Derecha a Izquierda
+    }, 2000);
+}
+
+function drawStars() {
+    ctx.fillStyle = "white";
+    for(let i=0; i<100; i++) {
+        let x = Math.random() * width;
+        let y = Math.random() * height;
+        let size = Math.random() * 2;
+        ctx.globalAlpha = Math.random();
+        ctx.fillRect(x, y, size, size);
+    }
+    ctx.globalAlpha = 1;
+}
+
+function drawArrow(a) {
+    ctx.save();
+    ctx.translate(a.x, a.y);
+    ctx.rotate(Math.atan2(a.vy, a.vx));
+    ctx.strokeStyle = "#00f2ff";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(-20, 0); ctx.lineTo(20, 0);
+    ctx.lineTo(10, -10); ctx.moveTo(20, 0); ctx.lineTo(10, 10);
+    ctx.stroke();
+    ctx.restore();
+}
+
+// Efecto máquina de escribir para la frase sobre el corazón
+let typewriterText = 'Eres la flecha que atraviesa mi corazón.';
+let typewriterIndex = 0;
+let typewriterLast = 0;
+let typewriterSpeed = 32; // ms por letra
+
+function drawPhraseTypewriter() {
+    ctx.save();
+    // Reducir ancho: usar un maxWidth y fuente más pequeña
+    let fontSize = Math.max(15, Math.min(width, height) * 0.032); // más chica
+    ctx.font = `bold ${fontSize}px Segoe Script, Dancing Script, cursive, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffe082';
+    ctx.shadowColor = '#000';
+    ctx.shadowBlur = 8;
+    // Bajar la frase: aumentar yOffset
+    let yOffset = height * (width < 600 ? 0.38 : 0.45); // más abajo
+    let showText = typewriterText.slice(0, typewriterIndex);
+    // Limitar el ancho visual de la frase
+    let maxWidth = width * 0.55; // menos ancha
+    ctx.fillText(showText, width/2, yOffset, maxWidth);
+    ctx.restore();
+}
+
+function animate(ts) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; // Estela negra
+    ctx.fillRect(0, 0, width, height);
+    
+    drawStars();
+    drawPhraseTypewriter();
+
+    // Actualizar y dibujar flechas
+    arrows.forEach((a, index) => {
+        a.x += a.vx;
+        a.y += a.vy;
+        drawArrow(a);
+        if (a.x > width + 100 || a.x < -100) arrows.splice(index, 1);
+    });
+
+    // Actualizar y dibujar partículas
+    particles.forEach(p => {
+        p.update(arrows);
+        p.draw();
+    });
+
+    // Efecto máquina de escribir
+    if (typeof ts === 'number') {
+      if (typewriterIndex < typewriterText.length) {
+        if (!typewriterLast) typewriterLast = ts;
+        if (ts - typewriterLast > typewriterSpeed) {
+          typewriterIndex++;
+          typewriterLast = ts;
+        }
+      }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+</body>
+</html>
