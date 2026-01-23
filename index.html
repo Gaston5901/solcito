@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Solcitoo</title>
   <meta name="description" content="Índice con todos los cosos de esta carpeta." />
+
+  <!-- Preconnect para fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <style>
     :root{
       --bg1: #fff0f6;
@@ -103,6 +108,8 @@
       padding: 18px 18px 16px;
       transition: transform .18s ease, border-color .18s ease, background .18s ease;
       backdrop-filter: blur(2px);
+      content-visibility: auto;
+      contain-intrinsic-size: 220px;
     }
 
     .card:hover{
@@ -187,7 +194,34 @@
     @media (min-width: 1020px){
       .card{ grid-column: span 4; }
     }
+
+    /* Optimización móvil */
+    @media (max-width: 600px){
+      body{
+        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      }
+      .card{
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      .card::before{ opacity: .25; }
+      .card:hover{ transform: none; }
+      .pill, .arrow{ box-shadow: none; }
+      .card.bloqueada{
+        filter: none !important;
+        opacity: 0.6 !important;
+      }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
+
   <!-- Google Fonts: Quicksand & Nunito -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -400,7 +434,7 @@ var tarjetasDesbloqueo = {
       // --- CONTADORES DE DESBLOQUEO ---
       // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
       // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
-      // ponerContadorEnCard('card-2', new Date('2025-01-14T04:00:00'));
+      ponerContadorEnCard('card-1', new Date('2026-01-24T04:00:00'));
       // ↑ card-2: id de otra tarjeta
       // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
       // --- FIN CONTADORES ---
