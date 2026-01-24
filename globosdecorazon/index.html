@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para vos ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<audio id="musica" autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/09/audio_6c1c76b2d6.mp3" type="audio/mpeg">
+</audio>
+
+<h1 class="titulo">Feliz San Valentín, mi amor</h1>
+
+<div id="escena"></div>
+
+<button id="btnCarta">💌 Carta para ti</button>
+
+<div id="carta" class="oculto">
+  <div class="contenido-carta">
+    <h2>Para vos ❤️</h2>
+    <p>
+      No hay palabras suficientes para decirte lo mucho que te amo.  
+      Gracias por existir, por tu sonrisa y por hacer mis días más lindos.
+    </p>
+    <button id="cerrar">Cerrar</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Persona Favorita ❤️</title>
+    <style>
+        /* CSS - EL ESTILO VISUAL */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffe4e1; /* Rosa suave de fondo */
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Contenedor de globos */
+        #balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Estilo del Globo Corazón */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 50px;
+            height: 45px;
+            animation: float up 8s linear forwards;
+            z-index: 5;
+        }
+
+        /* La forma de corazón usando pseudo-elementos */
+        .balloon::before,
+        .balloon::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 32px;
+            height: 50px;
+            border-radius: 50px 50px 0 0;
+            /* Degradado radial para efecto metálico como la foto */
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #b30000);
+            box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
+        }
+
+        .balloon::before {
+            left: 32px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .balloon::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* El hilo del globo */
+        .string {
+            position: absolute;
+            top: 48px;
+            left: 31px;
+            width: 2px;
+            height: 80px;
+            background: rgba(200, 0, 0, 0.3);
+            border-radius: 50%; /* Ligera curva */
+        }
+
+        /* Letra sobre el globo */
+        .letter {
+            position: absolute;
+            width: 64px;
+            text-align: center;
+            top: 5px;
+            z-index: 10;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            font-family: 'Cursive', sans-serif;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { transform: translateY(-50vh) translateX(20px); }
+            100% { transform: translateY(-115vh) translateX(-20px); opacity: 0; }
+        }
+
+        /* Jardín de Flores */
+        .garden {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            font-size: 2.5rem;
+            z-index: 20;
+        }
+
+        .flower {
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sway {
+            from { transform: rotate(-10deg); }
+            to { transform: rotate(10deg); }
+        }
+
+        /* Botón de la Carta */
+        .envelope-btn {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+            transition: transform 0.3s;
+            z-index: 30;
+        }
+
+        .envelope-btn:hover {
+            transform: scale(1.1);
+            background-color: #e01282;
+        }
+
+        /* Modal (La Carta) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fff0f5;
+            margin: 15% auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #ff69b4;
+            position: relative;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ff1493;
+        }
+
+        h2 { color: #ff1493; margin-top: 0; }
+        p { line-height: 1.6; color: #555; font-size: 1.1rem; }
+
+    </style>
+</head>
+<body>
+
+    <div id="balloon-container"></div>
+
+    <div class="envelope-wrapper">
+        <button id="openBtn" class="envelope-btn">📩 Tienes una carta</button>
+    </div>
+
+    <div class="garden">
+        <span class="flower">🌸</span>
+        <span class="flower">🌹</span>
+        <span class="flower">🌺</span>
+        <span class="flower">🌻</span>
+        <span class="flower">🌹</span>
+        <span class="flower">🌸</span>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¡Hola, bonita!</h2>
+            <p>Escribí esto para decirte que eres alguien sumamente especial. ❤️</p>
+            <p>Espero que estos globos te saquen una sonrisa tanto como tú me la sacas a mí.</p>
+            <p><b>¡Te quiero muchísimo!</b></p>
+        </div>
+    </div>
+
+    <script>
+        // JS - LA LÓGICA
+        const balloonContainer = document.getElementById('balloon-container');
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("openBtn");
+        const span = document.querySelector(".close");
+
+        const phrase = "TEAMO";
+
+        // Función para crear cada globo
+        function createBalloon(letter, index) {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            
+            // Posición horizontal: distribuida para que no se amontonen
+            const xPos = (index * 18) + 10; 
+            balloon.style.left = xPos + '%';
+            balloon.style.animationDelay = (index * 1.2) + 's';
+
+            // Añadir letra
+            const letterSpan = document.createElement('div');
+            letterSpan.className = 'letter';
+            letterSpan.innerText = letter;
+
+            // Añadir hilo
+            const stringDiv = document.createElement('div');
+            stringDiv.className = 'string';
+
+            balloon.appendChild(letterSpan);
+            balloon.appendChild(stringDiv);
+            balloonContainer.appendChild(balloon);
+        }
+
+        // Crear globos al cargar la página
+        window.onload = () => {
+            // Creamos los globos de la palabra
+            phrase.split('').forEach((char, i) => {
+                createBalloon(char, i);
+            });
+
+            // Crear algunos globos extra sin letras para llenar el fondo
+            for(let i=0; i<6; i++) {
+                setTimeout(() => {
+                    createBalloon("", Math.random() * 5);
+                }, 3000 + (i * 2000));
+            }
+        };
+
+        // Eventos del Modal
+        btn.onclick = () => {
+            modal.style.display = "block";
+        };
+
+        span.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
