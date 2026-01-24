@@ -231,11 +231,24 @@
       <div>
         <h1 class="title">Galería de recuerdos 💘</h1>
         
-      </div>
+      </div>|
       <div class="pill" title="Carpeta: sol">Solcitoo<33</div>
     </header>
 
     <div class="grid">
+
+                  <!-- Ejemplo de otra tarjeta bloqueada -->
+            <a class="card bloqueada" id="card-3" href="jardindetulipnaes/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>010111 <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">010101</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Proximamente</span>
+              </div>
+            </a>
+      
          <!-- Tarjeta bloqueada: Corazones que tira frases -->
             <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
               <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
@@ -335,7 +348,8 @@
       // Bloquear ambas cards al cargar
 var tarjetasDesbloqueo = {
   'card-1': false,
-  'card-2': false
+  'card-2': false,
+  'card-3': false
 };
 
       // Función para desbloquear una tarjeta por id
@@ -435,6 +449,7 @@ var tarjetasDesbloqueo = {
       // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
       // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
       ponerContadorEnCard('card-1', new Date('2026-01-24T04:00:00'));
+      ponerContadorEnCard('card-2', new Date('2026-09-24T04:00:00'));
       // ↑ card-2: id de otra tarjeta
       // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
       // --- FIN CONTADORES ---
