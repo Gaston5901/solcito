@@ -188,6 +188,22 @@
       text-align: center;
     }
 
+    .badge-desbloqueo{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffe082 0%, #f48fb1 55%, #e1bee7 100%);
+      color: #7c3a6a;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 6px 18px #f8bbd055, 0 2px 8px #fffde7cc;
+      border: 2px solid #f8bbd0;
+      text-shadow: 0 1px 6px #fffde7cc;
+    }
+
     @media (min-width: 740px){
       .card{ grid-column: span 6; padding: 22px; }
     }
@@ -236,31 +252,20 @@
     </header>
 
     <div class="grid">
-
+<!-- sasasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
                   <!-- Ejemplo de otra tarjeta bloqueada -->
-            <a class="card bloqueada" id="card-3" href="jardindetulipnaes/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>010111 <span style="font-size:1.2em;"></span></h2>
+            <a class="card bloqueada" id="card-3" href="tocarcorazonfrases/tocarcorazonfrase.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>Tocar Corazón  <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
-                <span class="tag">010101</span>
+                <span class="tag">frases para Sol </span>
                 <span class="arrow">🔒</span>
               </div>
               <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
                 <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Proximamente</span>
               </div>
             </a>
-      
-         <!-- Tarjeta bloqueada: Corazones que tira frases -->
-            <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
-              <div class="meta">
-                <span class="tag">corazonquetirafrases</span>
-                <span class="arrow">🔒</span>
-              </div>
-              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
-              </div>
-            </a>
-            <!-- Ejemplo de otra tarjeta bloqueada -->
+
+                        <!-- Ejemplo de otra tarjeta bloqueada -->
             <a class="card bloqueada" id="card-2" href="corazonflechassecruxan/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
               <h2>Corazon fuerte <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
@@ -271,6 +276,26 @@
                 <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
               </div>
             </a>
+      
+         <!-- Tarjeta bloqueada: Corazones que tira frases -->
+            <!-- <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">corazonquetirafrases</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
+              </div>
+            </a> -->
+                  <a class="card" href="corazonquetirafrases/index.html">
+        <h2>Corazones que tira frases</h2>
+        <div class="meta">
+          <span class="tag">corazon espacio</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+<!-- dsdsdsdsdsdsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
 
       <a class="card" href="corazon_candado_tulipanes/index.html">
         <h2>Corazón Secreto Espacial</h2>
@@ -425,6 +450,15 @@ var tarjetasDesbloqueo = {
       if (typeof tarjetasDesbloqueo === 'object') {
         tarjetasDesbloqueo[id] = true;
       }
+      var fechaKey = 'desbloqueoFecha:' + id;
+      var fechaActual = fechaDesbloqueo.getTime();
+      var fechaGuardada = parseInt(localStorage.getItem(fechaKey) || '0', 10);
+      if (fechaGuardada !== fechaActual) {
+        localStorage.setItem(fechaKey, String(fechaActual));
+        localStorage.removeItem('avisoDesbloqueo:' + id);
+        localStorage.removeItem('avisoDesbloqueo:ultimo');
+        marcarDesbloqueoConAviso(id);
+      }
       return;
     }
     var dias = Math.floor(falta / (1000*60*60*24));
@@ -442,6 +476,94 @@ var tarjetasDesbloqueo = {
   actualizarContador();
 }
 
+      function obtenerNombreCard(id) {
+        var card = document.getElementById(id);
+        if (!card) return 'Una sorpresa';
+        var h2 = card.querySelector('h2');
+        return h2 ? h2.textContent.replace(/\s+/g, ' ').trim() : 'Una sorpresa';
+      }
+
+      function ponerBadgeEnCard(id, texto) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        var existente = card.querySelector('.badge-desbloqueo');
+        if (existente) {
+          existente.textContent = texto;
+          return;
+        }
+        var badge = document.createElement('div');
+        badge.className = 'badge-desbloqueo';
+        badge.textContent = texto;
+        card.appendChild(badge);
+      }
+
+      function quitarBadgeDeCard(id) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        var existente = card.querySelector('.badge-desbloqueo');
+        if (existente) existente.remove();
+      }
+
+      function limpiarAvisosExcepto(idActual) {
+        Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+          if (id === idActual) return;
+          localStorage.removeItem('avisoDesbloqueo:' + id);
+          quitarBadgeDeCard(id);
+        });
+      }
+
+      function marcarDesbloqueoConAviso(id) {
+        limpiarAvisosExcepto(id);
+        var key = 'avisoDesbloqueo:' + id;
+        var raw = localStorage.getItem(key);
+        var data = raw ? JSON.parse(raw) : null;
+        if (!data || data.mostrado !== true) {
+          var nombre = obtenerNombreCard(id);
+          ponerBadgeEnCard(id, '¡Nuevo! 💖');
+          localStorage.setItem(key, JSON.stringify({
+            mostrado: true,
+            restantes: 2,
+            nombre: nombre
+          }));
+          localStorage.setItem('avisoDesbloqueo:ultimo', id);
+        }
+      }
+
+      function manejarAvisoPendiente() {
+        var ultimoId = localStorage.getItem('avisoDesbloqueo:ultimo');
+        if (!ultimoId) {
+          Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+            quitarBadgeDeCard(id);
+          });
+          return;
+        }
+
+        limpiarAvisosExcepto(ultimoId);
+
+        var key = 'avisoDesbloqueo:' + ultimoId;
+        var raw = localStorage.getItem(key);
+        if (!raw) {
+          quitarBadgeDeCard(ultimoId);
+          return;
+        }
+        var data = JSON.parse(raw);
+        if (!data || data.restantes <= 0) {
+          localStorage.removeItem(key);
+          quitarBadgeDeCard(ultimoId);
+          return;
+        }
+
+        ponerBadgeEnCard(ultimoId, 'Nuevo 💖');
+        data.restantes = data.restantes - 1;
+        if (data.restantes <= 0) {
+          localStorage.removeItem(key);
+          localStorage.removeItem('avisoDesbloqueo:ultimo');
+          quitarBadgeDeCard(ultimoId);
+        } else {
+          localStorage.setItem(key, JSON.stringify(data));
+        }
+      }
+
       // Llama a esta función para poner un contador en la card que quieras:
       // ponerContadorEnCard('id-de-la-card', fechaObjetivoDate)
       // Ejemplo para poner 2 horas desde ahora en la card con id "card-3":
@@ -449,7 +571,7 @@ var tarjetasDesbloqueo = {
       // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
       // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
       ponerContadorEnCard('card-1', new Date('2026-01-24T04:00:00'));
-      ponerContadorEnCard('card-2', new Date('2026-01-25T02:00:00'));
+      ponerContadorEnCard('card-2', new Date('2026-01-25T02:35:00'));
       // ↑ card-2: id de otra tarjeta
       // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
       // --- FIN CONTADORES ---
@@ -463,6 +585,8 @@ var tarjetasDesbloqueo = {
           // ponerContadorEnCard('card-1', new Date('2026-01-22T014:00:00'));
         }
       });
+
+      manejarAvisoPendiente();
     </script>
   </div>
 </body>

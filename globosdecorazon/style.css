@@ -27,8 +27,8 @@ body {
 .globo {
   position: absolute;
   bottom: -120px;
-  width: 86px;
-  height: 86px;
+  width: 70px;
+  height: 70px;
   background: #ff4d6d;
   transform: rotate(-45deg);
   animation: subir 3s ease-out forwards, flotar 4s ease-in-out infinite;
@@ -39,48 +39,37 @@ body {
 .globo::after {
   content: "";
   position: absolute;
-  width: 86px;
-  height: 86px;
+  width: 70px;
+  height: 70px;
   background: #ff4d6d;
   border-radius: 50%;
 }
 
 .globo::before {
-  top: -43px;
+  top: -35px;
   left: 0;
 }
 
 .globo::after {
-  left: 43px;
+  left: 35px;
   top: 0;
 }
 
 /* Letra */
 .letra {
   position: absolute;
-  color: #ff4d6d;
-  font-size: 24px;
+  color: white;
+  font-size: 26px;
   font-weight: bold;
-  top: 118px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-shadow: 0 2px 6px rgba(255,77,109,.35);
-}
-
-.hilo {
-  position: absolute;
-  width: 2px;
-  height: 38px;
-  background: #ff9bb0;
-  top: 92px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 18px;
+  left: 28px;
+  transform: rotate(45deg);
 }
 
 /* Animaciones */
 @keyframes subir {
   to {
-    bottom: var(--destino, 50%);
+    bottom: 55%;
   }
 }
 

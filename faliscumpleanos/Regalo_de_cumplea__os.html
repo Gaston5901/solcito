@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja de Regalo</title>
+    <!-- FUENTE ANIMADA IMPORTADA -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* REGALO MÁS GRANDE */
+            --height: 25;
+            --width: 25;
+            --depth: 25;
+            --no-of-steps: 9;
+            --primary: linear-gradient(135deg, #e91e63, #ad1457, #c2185b);
+            --secondary: linear-gradient(135deg, #ff6f00, #ff8f00, #ffb300);
+            --ribbon-bg: linear-gradient(90deg, #ff9f1c 0%, #ffbf69 50%, #ff9f1c 100%);
+            --ribbon-bg-rotated: linear-gradient(0deg, #ff9f1c 0%, #ffbf69 50%, #ff9f1c 100%);
+            --ribbon-width: calc(var(--width) * 0.2vmin);
+            --delay: 0.15;
+            --speed: 0.3;
+        }
+
+        * {
+            box-sizing: border-box;
+            transform-style: preserve-3d;
+        }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            perspective: 100vmin;
+            overflow: hidden;
+            font-family: 'Fredoka', sans-serif;
+            margin: 0;
+        }
+
+        /* Contenedor con desenfoque */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Fondo para PC por defecto */
+            background: linear-gradient(rgba(255, 0, 234, 0.249), rgba(205, 174, 0, 0.293)), url('images/image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            filter: blur(10px);
+            transform: scale(1.1); /* Evita bordes vacíos por el desenfoque */
+        }
+
+        /* MODIFICADO: Texto más grande */
+        .click-instruction {
+            position: fixed;
+            top: 25%;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 2.5rem; /* Aumentado de 1.8rem */
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 2;
+        }
+
+        input { display: none; }
+
+        .scene {
+            transform: rotateX(-24deg) rotateY(-32deg) rotateX(90deg) translate3d(0, 0, calc(var(--height) * -0.5vmin));
+            cursor: pointer;
+            animation: giftPulse 2s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: rotateX(-24deg) rotateY(-32deg) rotateX(90deg) translate3d(0, 0, calc(var(--height) * -0.5vmin)) scale(1); }
+            50% { transform: rotateX(-24deg) rotateY(-32deg) rotateX(90deg) translate3d(0, 0, calc(var(--height) * -0.5vmin)) scale(1.08); }
+        }
+
+        #package:not(:checked) ~ .scene { --packaged: 0; }
+
+        .scene * {
+            --step-delay: calc(var(--step, 1) - ((1 - var(--packaged, 1)) * (var(--step, 1) - ((var(--no-of-steps) + 1) - var(--step, 1)))));
+            transition: transform calc(var(--speed, 0.3) * 1s) calc((var(--step-delay) * var(--delay, 0.15)) * 1s) cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                       opacity calc(var(--speed, 0.3) * 1s) calc((var(--step-delay) * var(--delay, 0.15)) * 1s) ease-in-out;
+        }
+
+        .gift { height: calc(var(--depth) * 1vmin); width: calc(var(--width) * 1vmin); background: var(--primary); position: relative; }
+        .gift__ribbon { position: absolute; height: 50%; width: var(--ribbon-width); background: var(--ribbon-bg); left: 50%; bottom: 50%; transform-origin: 50% 100%; transform: translate(-50%, 0) rotate(calc(var(--rotate, 0) * 1deg)) translate(0, 100%) scaleY(var(--packaged, 1)); box-shadow: 0 0 15px rgba(255, 140, 0, 0.6); }
+        .gift__ribbon:nth-of-type(1) { --rotate: 0; } .gift__ribbon:nth-of-type(2) { --rotate: 90; } .gift__ribbon:nth-of-type(3) { --rotate: 180; } .gift__ribbon:nth-of-type(4) { --rotate: 270; }
+        .gift__lid { height: 100%; width: 100%; transform: scale(1.05) translate3d(0, 0, calc(((var(--height, 0) * (2 - var(--packaged, 1))) * 1vmin) + 4px)); }
+        
+        .gift__side { background: var(--primary); filter: brightness(var(--b, 1)); position: absolute; bottom: 50%; left: 50%; height: calc(var(--height) * 1vmin); transform-origin: 50% 100%; transform: translate(-50%, 0) rotate(calc(var(--rotate, 0) * 1deg)) translate(0, calc(var(--offset) * -0.5vmin)) rotateX(calc(var(--packaged, 1) * -90deg)); box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1); overflow: hidden; }
+        .gift__side:after { content: ''; position: absolute; height: 100%; transform-origin: 50% 100%; width: var(--ribbon-width); background: var(--ribbon-bg); top: 50%; left: 50%; transform: translate(-50%, -50%) scaleY(var(--packaged, 1)); }
+        
+        .gift__side::before, .gift-lid__side--top::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%); transform: rotate(45deg);
+        }
+
+        .gift__side--left, .gift__side--right { --offset: var(--width, 20); width: calc(var(--depth) * 1vmin); }
+        .gift__side--front, .gift__side--back { --offset: var(--depth, 20); width: calc(var(--width) * 1vmin); }
+        .gift__side--right { --b: 0.7; --rotate: 0; } .gift__side--front { --b: 0.8; --rotate: 90; } .gift__side--left { --b: 0.85; --rotate: 180; } .gift__side--back { --b: 0.9; --rotate: 270; }
+        
+        .gift-lid__side { opacity: var(--packaged, 1); position: absolute; background: var(--primary); height: calc(var(--height) * 0.15vmin); width: 100%; filter: brightness(var(--b, 1)); box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1); overflow: hidden; }
+        .gift-lid__side:after { content: ''; height: 100%; background: var(--ribbon-bg); width: var(--ribbon-width); position: absolute; top: 50%; left: 50%; transform-origin: 50% 100%; transform: translate(-50%, -50%) scaleY(var(--packaged, 1)); }
+        
+        .gift-lid__side--top { --b: 1.2; height: 100%; } .gift-lid__side--top:after { display: none; }
+        .gift-lid__side--back { --b: 0.7; bottom: 100%; transform-origin: 50% 100%; transform: rotateX(90deg); }
+        .gift-lid__side--front { --b: 0.8; top: 100%; transform-origin: 50% 0%; transform: rotateX(-90deg); }
+        .gift-lid__side--right, .gift-lid__side--left { --b: 0.75; height: 100%; width: calc(var(--height) * 0.15vmin); top: 50%; left: 50%; transform-origin: 50% 0%; transform: translate(-50%, -50%) rotateY(calc(var(--coefficient, 1) * 90deg)) translate3d(0, 0, calc(var(--width) * 0.5vmin)) translate(calc(var(--coefficient, 1) * 50%), 0); }
+        .gift-lid__side--right:after, .gift-lid__side--left:after { background: var(--ribbon-bg-rotated); width: 100%; height: var(--ribbon-width); transform-origin: 100% 50%; transform: translate(-50%, -50%) scaleX(var(--packaged, 1)); }
+        .gift-lid__side--left { --coefficient: -1; }
+
+        .gift__side--right { --step: 1; } .gift__side--front { --step: 2; } .gift__side--left { --step: 3; } .gift__side--back { --step: 4; }
+        .gift__lid { --step: 5; } .gift__side:after { --step: 6; } .gift-lid__side:after { --step: 7; } .gift__ribbon { --step: 8; }
+
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 10, 20, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content { background: linear-gradient(145deg, #9f9aff, #9c35f6); padding: 1rem; border-radius: 20px; text-align: center; max-width: 90%; width: 500px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); position: relative; animation: modalSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes modalSlideIn { from { transform: translateY(50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+        .modal-frame { padding: 2.5rem 2rem; border-radius: 15px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); }
+        .modal-frame::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 15px; border: 8px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #ffd700, #4ecdc4, #ff6b6b) border-box; background-size: 200% 200%;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: destination-out; mask-composite: exclude;
+            animation: animated-border 6s ease-in-out infinite;
+        }
+
+        @keyframes animated-border { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .modal h2 { color: white; font-size: 3rem; margin-bottom: 1rem; position: relative; font-weight: 600; }
+        .modal p { color: #e0e0e0; font-size: 1.2rem; margin-bottom: 1.5rem; line-height: 1.7; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
+        .modal img { max-width: 70%; max-height: 180px; width: auto; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); border: 3px solid rgba(255, 255, 255, 0.1); }
+        .close-btn { position: absolute; top: 15px; right: 25px; font-size: 2rem; color: white; cursor: pointer; z-index: 1001; transition: transform 0.3s ease, color 0.3s ease; }
+        .close-btn:hover { transform: scale(1.2) rotate(90deg); color: #ff6b6b; }
+        
+        .modal-decorations span { position: absolute; font-size: 1.5rem; animation: float 6s ease-in-out infinite; }
+        .modal-decorations .deco-1 { top: 10%; left: 10%; animation-delay: 0s; } .modal-decorations .deco-2 { top: 80%; left: 15%; animation-delay: 2s; }
+        .modal-decorations .deco-3 { top: 20%; right: 10%; animation-delay: 4s; } .modal-decorations .deco-4 { top: 70%; right: 15%; animation-delay: 1s; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(15deg); } }
+
+        #confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1001; }
+        .confetti { position: absolute; opacity: 0; }
+        @keyframes confetti-fall { 0% { transform: translateY(-10vh) rotateZ(0deg) rotateY(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotateZ(720deg) rotateY(720deg); opacity: 0; } }
+        
+        .firework { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 999; }
+        .spark { position: absolute; width: 4px; height: 4px; border-radius: 50%; }
+        
+        /* AÑADIDO: Media query para fondo en móviles */
+        @media (max-width: 768px) {
+            .background-container {
+                /* Fondo para móviles */
+                background: linear-gradient(rgba(255, 0, 234, 0.249), rgba(205, 174, 0, 0.293)), url('images/image3.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            :root { 
+                --height: 22; --width: 22; --depth: 22; 
+            } 
+            .modal h2 { 
+                font-size: 2.2rem; 
+            } 
+            .modal p { 
+                font-size: 1.1rem; 
+            }
+        }
+
+        @media (max-width: 480px) { 
+            :root { 
+                --height: 28; --width: 28; --depth: 28; 
+            } 
+            .modal h2 { 
+                font-size: 2rem; 
+            } 
+            .modal-content { 
+                padding: 0.5rem; 
+            } 
+            .modal-frame { 
+                padding: 2rem 1.5rem; 
+            }
+        }
+  
+   </style>
+</head>
+<body>
+    <div class="background-container"></div>
+
+    <input id="package" type="checkbox" checked>
+    <div class="click-instruction" id="instructionText">Haz clic en el regalo...</div>
+
+    <div id="confetti-container"></div>
+
+    <div class="scene" id="giftBox">
+        <div class="gift">
+            <div class="gift__side gift__side--right"></div>
+            <div class="gift__side gift__side--front"></div>
+            <div class="gift__side gift__side--left"></div>
+            <div class="gift__side gift__side--back"></div>
+            <div class="gift__lid gift-lid">
+                <div class="gift-lid__side gift-lid__side--top">
+                    <div class="gift__ribbon"></div> <div class="gift__ribbon"></div>
+                    <div class="gift__ribbon"></div> <div class="gift__ribbon"></div>
+                </div>
+                <div class="gift-lid__side gift-lid__side--back"></div>
+                <div class="gift-lid__side gift-lid__side--front"></div>
+                <div class="gift-lid__side gift-lid__side--left"></div>
+                <div class="gift-lid__side gift-lid__side--right"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="birthdayModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">×</span>
+            <div class="modal-frame">
+                <div class="modal-decorations">
+                    <span class="deco-1">🎉</span><span class="deco-2">🎂</span>
+                    <span class="deco-3">🎈</span><span class="deco-4">🎁</span>
+                </div>
+                <h2>¡Feliz Cumpleaños!</h2>
+                <p>Que tu día brille tanto como tú. ¡Espero que esté lleno de risas, regalos y todo lo que te hace feliz!</p>
+                <img src="https://cdn.pixabay.com/photo/2023/09/04/20/39/cake-8233676_1280.jpg" alt="Pareja celebrando">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const giftBox = document.getElementById('giftBox');
+        const packageCheckbox = document.getElementById('package');
+        const modal = document.getElementById('birthdayModal');
+        const closeBtn = document.getElementById('closeBtn');
+        const instructionText = document.getElementById('instructionText');
+        const confettiContainer = document.getElementById('confetti-container');
+        let isOpened = false;
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#fd79a8', '#fdcb6e', '#ff9f1c', '#ffbf69'];
+
+        let confettiInterval = null;
+
+        function createConfettiParticles() {
+            const numToCreate = 3;
+            for (let i = 0; i < numToCreate; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size * (Math.random() > 0.4 ? 1.5 : 1)}px`;
+                if (Math.random() > 0.7) {
+                    confetti.style.borderRadius = '50%';
+                }
+
+                const fallDuration = Math.random() * 4 + 3;
+                confetti.style.animation = `confetti-fall ${fallDuration}s linear forwards`;
+                
+                confettiContainer.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), fallDuration * 1000);
+            }
+        }
+
+        function startConfettiShower() {
+            if (confettiInterval) return;
+            confettiInterval = setInterval(createConfettiParticles, 150);
+        }
+
+        function stopConfettiShower() {
+            clearInterval(confettiInterval);
+            confettiInterval = null;
+            confettiContainer.innerHTML = '';
+        }
+
+        function createFirework(x, y) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            document.body.appendChild(firework);
+
+            for (let i = 0; i < 15; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                spark.style.background = color;
+                spark.style.boxShadow = `0 0 8px ${color}`;
+                
+                const angle = (i * 24) * Math.PI / 180;
+                const velocity = Math.random() * 150 + 80;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                spark.style.left = '0px'; spark.style.top = '0px';
+                firework.appendChild(spark);
+
+                let startTime = Date.now();
+                function animateSpark() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = elapsed / 1200;
+                    if (progress < 1) {
+                        const currentX = vx * progress;
+                        const currentY = vy * progress + 0.5 * 180 * progress * progress;
+                        spark.style.transform = `translate(${currentX}px, ${currentY}px)`;
+                        spark.style.opacity = 1 - progress;
+                        requestAnimationFrame(animateSpark);
+                    }
+                }
+                animateSpark();
+            }
+            setTimeout(() => { firework.remove(); }, 1200);
+        }
+
+        function createMultipleFireworks() {
+            const numFireworks = 25;
+            for (let i = 0; i < numFireworks; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight * 0.7;
+                    createFirework(x, y);
+                }, i * 70);
+            }
+        }
+
+        giftBox.addEventListener('click', function() {
+            if (isOpened) return;
+            isOpened = true;
+            instructionText.style.opacity = '0';
+            packageCheckbox.checked = false;
+            
+            startConfettiShower();
+            createMultipleFireworks();
+            
+            setTimeout(() => {
+                modal.style.display = 'flex';
+            }, 1800);
+        });
+
+        function closeAll() {
+            stopConfettiShower();
+
+            modal.style.display = 'none';
+            setTimeout(() => {
+                packageCheckbox.checked = true;
+                instructionText.style.opacity = '1';
+                isOpened = false;
+            }, 500);
+        }
+
+        closeBtn.addEventListener('click', closeAll);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeAll();
+            }
+        });
+    </script>
+</body>
+</html>
