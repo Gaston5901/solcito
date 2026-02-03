@@ -136,6 +136,7 @@
     }
 
     .heart-btn { 
+      position: relative;
       display: grid; place-items: center; 
       width: clamp(280px, 40vmin, 520px); 
       height: clamp(280px, 40vmin, 520px);
@@ -150,6 +151,19 @@
       width: 85%; height: 85%; display: block; 
       transform-origin: center center;
       will-change: transform;
+    }
+
+    .phrase-count {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: clamp(28px, 6vmin, 64px);
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 214, 231, 0.9);
+      pointer-events: none;
+      z-index: 3;
     }
     .heart svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
@@ -198,7 +212,10 @@
       z-index: 10;
       box-shadow: 0 8px 32px rgba(255, 43, 79, .2);
       transform: translate(-50%, -50%);
-      white-space: nowrap;
+      max-width: min(80vw, 420px);
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
       will-change: transform, opacity;
     }
 
@@ -354,6 +371,7 @@
 
     <div class="heart-container">
       <button class="heart-btn" id="heartBtn">
+        <span class="phrase-count" id="phraseCount"></span>
         <span class="heart">
           <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -395,17 +413,17 @@
   </div>
 
   <audio id="audioPlayer" loop>
-    <source src="https://www.dropbox.com/scl/fi/v8dbihkx7pj30lmjt2kxk/SHE-LOOKS-LIKE-A-DREAM.mp3?rlkey=q951cxdk40i49tsr95d7l5s3e&st=m45mplf6&dl=1" type="audio/mpeg">
+    <source src="edsheranmg.mp4" type="audio/mpeg">
   </audio>
 
   <script>
     const PHRASES = [
-      "Eres mi mejor aventura ✨ 💖", "Contigo todo es magia 🌙 💖", 
+      "Eres mi mejor aventura ✨ 💖", "Contigo todo es magia solcito🌙 💖", 
       "Mi refugio favorito eres tú 🏡 💖", "Tu sonrisa ilumina mi vida 🌟 💖",
-      "Eres mi canción infinita 🎶 💖", "Mi destino eres tú 💫 💖",
+      "Sos una persona increible e unica 🎶 💖", "Mi destino eres tú 💫 💖",
       "Nuestro amor será eterno 🔥 💖", "A tu lado, soy feliz 💖",
       "Te amo cada día más 💖", "Tu amor es mi inspiración 🎨 💖",
-      "Eres mi hogar y mi aventura 🗺️ 💖", "Contigo el tiempo se detiene ⏰ 💖"
+      "Sos unica e inigualable y hermosa solcito 🗺️ 💖", "Contigo el tiempo se detiene ⏰ 💖"
     ];
 
     const scene = document.getElementById('scene');
@@ -417,6 +435,7 @@
     const progressFill = document.getElementById('progressFill');
     const currentTimeEl = document.getElementById('currentTime');
     const totalTimeEl = document.getElementById('totalTime');
+    const phraseCountEl = document.getElementById('phraseCount');
     
     const playIcon = document.getElementById('playIcon');
     const pauseIcon = document.getElementById('pauseIcon');
@@ -424,6 +443,11 @@
     let isProcessing = false;
     let firstClick = true;
     let isPlaying = false;
+    let phraseIndex = 0;
+    const totalPhrases = PHRASES.length;
+    let remainingPhrases = totalPhrases;
+
+    updatePhraseCount();
 
     function triggerRelease(e) {
       if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') {
@@ -524,8 +548,18 @@
       createPhrase();
     }
 
+    function updatePhraseCount() {
+      phraseCountEl.textContent = remainingPhrases;
+    }
+
     function createPhrase() {
-      const phraseText = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+      const phraseText = PHRASES[phraseIndex];
+      phraseIndex = (phraseIndex + 1) % totalPhrases;
+      remainingPhrases -= 1;
+      if (remainingPhrases < 0) {
+        remainingPhrases = totalPhrases - 1;
+      }
+      updatePhraseCount();
       const el = document.createElement('div');
       el.className = 'phrase shooting';
       el.textContent = phraseText;
@@ -546,22 +580,39 @@
 
       const fallDistance = rand(250, 450);
       const horizontalDrift = rand(-120, 120);
-      const finalX = shootX + horizontalDrift;
-      const finalY = shootY + fallDistance;
+      let finalX = shootX + horizontalDrift;
+      let finalY = shootY + fallDistance;
+
+      scene.appendChild(el);
+
+      const padding = 12;
+      const phraseWidth = el.offsetWidth;
+      const phraseHeight = el.offsetHeight;
+      const halfW = phraseWidth / 2;
+      const halfH = phraseHeight / 2;
+
+      const minX = halfW + padding;
+      const maxX = sceneRect.width - halfW - padding;
+      const minY = halfH + padding;
+      const maxY = sceneRect.height - halfH - padding;
+
+      const clampedShootX = clamp(startX + shootX, minX, maxX) - startX;
+      const clampedShootY = clamp(startY + shootY, minY, maxY) - startY;
+      finalX = clamp(startX + finalX, minX, maxX) - startX;
+      finalY = clamp(startY + finalY, minY, maxY) - startY;
 
       const initialRotation = rand(-20, 20);
       const finalRotation = initialRotation + rand(-40, 40);
       const duration = rand(4.5, 6.5);
 
-      el.style.setProperty('--shoot-x', shootX + 'px');
-      el.style.setProperty('--shoot-y', shootY + 'px');
+      el.style.setProperty('--shoot-x', clampedShootX + 'px');
+      el.style.setProperty('--shoot-y', clampedShootY + 'px');
       el.style.setProperty('--final-x', finalX + 'px');
       el.style.setProperty('--final-y', finalY + 'px');
       el.style.setProperty('--rotation', initialRotation + 'deg');
       el.style.setProperty('--final-rotation', finalRotation + 'deg');
       el.style.setProperty('--duration', duration + 's');
-      
-      scene.appendChild(el);
+
       el.addEventListener('animationend', () => el.remove(), { once: true });
     }
 
@@ -594,6 +645,10 @@
 
     function rand(min, max) { 
       return Math.random() * (max - min) + min; 
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
     }
   </script>
 </body>

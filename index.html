@@ -143,6 +143,23 @@
       text-shadow: 0 1px 8px #ffe0ef55;
     }
 
+    .card-number{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f48fb1 0%, #ffe082 100%);
+      color: #7c3a6a;
+      font-size: .9rem;
+      font-weight: 800;
+      box-shadow: 0 2px 8px #f8bbd055;
+      border: 1.5px solid #f8bbd0;
+      flex: 0 0 auto;
+    }
+
     .meta{
       display:flex;
       align-items:center;
@@ -254,8 +271,20 @@
     <div class="grid">
 <!-- sasasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
                   <!-- Ejemplo de otra tarjeta bloqueada -->
-            <a class="card bloqueada" id="card-3" href="tocarcorazonfrases/tocarcorazonfrase.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>Tocar Corazón  <span style="font-size:1.2em;"></span></h2>
+                               <a class="card bloqueada" id="card-4" data-num="10" href="tocarcorazonfrases/tocarcorazonfrase.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>Tocar pantalla <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">Nace una flor </span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(139, 121, 121, 0.8);padding:8px 18px;border-radius:999px;color:#000000;font-weight:600;font-size:1.1em;">Proximamente</span>
+              </div>
+            </a>
+
+
+            <a class="card bloqueada" id="card-3" data-num="9" href="tocarcorazonfrases/tocarcorazonfrase.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>Tocar Corazón  <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
                 <span class="tag">frases para Sol </span>
                 <span class="arrow">🔒</span>
@@ -266,8 +295,8 @@
             </a>
 
                         <!-- Ejemplo de otra tarjeta bloqueada -->
-            <a class="card bloqueada" id="card-2" href="corazonflechassecruxan/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
-              <h2>Corazon fuerte <span style="font-size:1.2em;"></span></h2>
+            <a class="card bloqueada" id="card-2" data-num="8" href="corazonflechassecruxan/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>Corazon fuerte <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
                 <span class="tag">corazon flechas</span>
                 <span class="arrow">🔒</span>
@@ -288,8 +317,8 @@
                 <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
               </div>
             </a> -->
-                  <a class="card" href="corazonquetirafrases/index.html">
-        <h2>Corazones que tira frases</h2>
+                  <a class="card" data-num="7" href="corazonquetirafrases/index.html">
+                    <h2><span class="card-number"></span>Corazones que tira frases</h2>
         <div class="meta">
           <span class="tag">corazon espacio</span>
           <span class="arrow">→</span>
@@ -297,8 +326,8 @@
       </a>
 <!-- dsdsdsdsdsdsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
 
-      <a class="card" href="corazon_candado_tulipanes/index.html">
-        <h2>Corazón Secreto Espacial</h2>
+      <a class="card" data-num="6" href="corazon_candado_tulipanes/index.html">
+        <h2><span class="card-number"></span>Corazón Secreto Espacial</h2>
         <div class="meta">
           <span class="tag">corazon_candado_tulipanes</span>
           <span class="arrow">→</span>
@@ -314,8 +343,8 @@
       </a> -->
 
 
-      <a class="card" href="tulipanes/flor_tulipan.html">
-        <h2>Flor (Tulipanes)</h2>
+      <a class="card" data-num="5" href="tulipanes/flor_tulipan.html">
+        <h2><span class="card-number"></span>Flor (Tulipanes)</h2>
         <div class="meta">
           <span class="tag">tulipanes</span>
           <span class="arrow">→</span>
@@ -330,31 +359,31 @@
         </div>
       </a> -->
 
-      <a class="card" href="flores%20amarillas%20imagen%20ff/index.html">
-        <h2>Flores (amarillas, imagen ff)</h2>
+      <a class="card" data-num="4" href="flores%20amarillas%20imagen%20ff/index.html">
+        <h2><span class="card-number"></span>Flores (amarillas, imagen ff)</h2>
         <div class="meta">
           <span class="tag">flores amarillas imagen ff</span>
           <span class="arrow">→</span>
         </div>
       </a>
 
-      <a class="card" href="flores%20moradas%20con%20frases/index.html">
-        <h2>Flores 21 (moradas con frases)</h2>
+      <a class="card" data-num="3" href="flores%20moradas%20con%20frases/index.html">
+        <h2><span class="card-number"></span>Flores 21 (moradas con frases)</h2>
         <div class="meta">
           <span class="tag">flores moradas con frases</span>
           <span class="arrow">→</span>
         </div>
       </a>
           <!-- proximamenteeee sorpresaQR -->
-      <a class="card" href="sorpresaQR/index.html">
-        <h2>Sorpresa (QR)</h2>
+      <a class="card" data-num="2" href="sorpresaQR/index.html">
+        <h2><span class="card-number"></span>Sorpresa (QR)</h2>
         <div class="meta">
           <span class="tag">amor</span>
           <span class="arrow">→</span>
         </div>
       </a> 
-            <a class="card" href="corazonconmusica/index.html">
-        <h2>Corazon (el espacio)</h2>
+            <a class="card" data-num="1" href="corazonconmusica/index.html">
+          <h2><span class="card-number"></span>Corazon (el espacio)</h2>
         <div class="meta">
           <span class="tag">Musica</span>
           <span class="arrow">→</span>
@@ -374,7 +403,8 @@
 var tarjetasDesbloqueo = {
   'card-1': false,
   'card-2': false,
-  'card-3': false
+  'card-3': false,
+  'card-4': false
 };
 
       // Función para desbloquear una tarjeta por id
@@ -572,6 +602,7 @@ var tarjetasDesbloqueo = {
       // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
       ponerContadorEnCard('card-1', new Date('2026-01-24T04:00:00'));
       ponerContadorEnCard('card-2', new Date('2026-01-25T02:35:00'));
+      ponerContadorEnCard('card-3', new Date('2026-02-03T02:30:00'));
       // ↑ card-2: id de otra tarjeta
       // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
       // --- FIN CONTADORES ---
@@ -587,6 +618,15 @@ var tarjetasDesbloqueo = {
       });
 
       manejarAvisoPendiente();
+
+      // --- NUMERACIÓN DE CARDS (editable con data-num) ---
+      document.querySelectorAll('.card').forEach(function(card) {
+        var numero = card.getAttribute('data-num');
+        var badge = card.querySelector('.card-number');
+        if (badge) {
+          badge.textContent = numero ? numero : '';
+        }
+      });
     </script>
   </div>
 </body>
